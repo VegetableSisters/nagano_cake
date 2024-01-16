@@ -1,5 +1,7 @@
 class Admin::GenresController < ApplicationController
+  # アクセス権限
   before_action :authenticate_admin!
+  
   def index
   end
 

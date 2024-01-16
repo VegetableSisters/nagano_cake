@@ -1,4 +1,7 @@
 class Public::AddressesController < ApplicationController
+  # アクセス権限
+  before_action :authenticate_customer!
+  
   def index
   end
 

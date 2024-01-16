@@ -1,4 +1,7 @@
 class Public::CustomersController < ApplicationController
+  # アクセス権限
+  before_action :authenticate_customer!
+  
   def show
   end
 
