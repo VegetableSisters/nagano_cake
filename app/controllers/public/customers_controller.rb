@@ -1,6 +1,6 @@
 class Public::CustomersController < ApplicationController
   # アクセス権限
-  before_action :authenticate_customer!
+  # before_action :authenticate_customer!
   
   def show
     # 顧客のマイページ　URL：/customers/my_page　

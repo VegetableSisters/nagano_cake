@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     resources :homes, only: [:top]
   end
 
-  namespace :public, path: '' do
+  scope module: 'public' do
     root to: "homes#top"
     get "about" => "homes#about"
     
