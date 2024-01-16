@@ -39,7 +39,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
   # end
 
   protected
-
+  
 # 新規会員登録に必要な情報は、姓名、姓名カナ、Email、郵便番号、住所、電話番号、パスワード
   If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
