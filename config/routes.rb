@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+   root to: 'public/homes#top'
+  
   namespace :admin do
     get 'orders_details/update'
   end
@@ -65,5 +67,4 @@ Rails.application.routes.draw do
   devise_for :admins
   devise_for :customers
   devise_for :users
- root to: 'homes#top'
 end
