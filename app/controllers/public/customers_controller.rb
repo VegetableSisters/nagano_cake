@@ -5,8 +5,7 @@ class Public::CustomersController < ApplicationController
   end
 
   def edit
-    # 顧客の登録情報編集画面　/customers/information/edit
-    # @customer = current_customer
+    @customer = current_customer
   end
 
   def update
