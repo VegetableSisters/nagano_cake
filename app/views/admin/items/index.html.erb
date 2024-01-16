@@ -1,17 +1,16 @@
 <h1>商品一覧</h1>
-<table>
+<% @items.each do |item| %>
+  <table>
+    <thead>
+      <tr>
+        <th>商品ＩＤ</th>
+        <th>商品名</th>
+        <th>税抜き価格</th>
+        <th>ジャンル</th>
+        <th>ステータス</th>
+      </tr>
+    </thead>
   
-  <thead>
-    <tr>
-      <th>商品ＩＤ</th>
-      <th>商品名</th>
-      <th>税抜き価格</th>
-      <th>ジャンル</th>
-      <th>ステータス</th>
-    </tr>
-  </thead>
-  
-  <% @items.each do |item| %>
     <tbody>
       <tr><%= item.id %></tr>
       <tr><%= item.name %></tr>
@@ -19,6 +18,5 @@
       <tr></tr>
       <tr></tr>
     </tbody>
-  <% end %>
-
-</table>
+  </table>
+<% end %>
