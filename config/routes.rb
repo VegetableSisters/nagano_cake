@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  root to: 'public/homes#top'
-
+  
   namespace :admin do
+    root to: "homes#top"
+    
     resources :orders_details, only: [:update]
     resources :orders, only: [:show, :update]
     resources :customers, only: [:index, :show, :edit, :update]
@@ -10,12 +11,33 @@ Rails.application.routes.draw do
     resources :homes, only: [:top]
   end
 
-  namespace :public do
-    resources :addresses, only: [:index, :edit, :create, :update, :destroy]
-    resources :orders, only: [:new, :confirm, :thanks, :create, :index, :show]
-    resources :cart_items, only: [:index, :update, :destroy, :destroy_all, :create]
-    resources :customers, only: [:show, :edit, :update, :confirm, :withdraw]
+  namespace :public, path: '' do
+    root to: "homes#top"
+    get "about" => "homes#about"
+    
+    # 会員
+    get "customers/my_page" => "customers#show"
+    get "customers/information/edit" => "customers#edit"
+    patch "customers/information" => "customers#update"
+    get "customers/confirm" => "customers#confirm"
+    patch "customers/withdraw" => "customers#withdraw"
+    
+    # 商品
     resources :items, only: [:index, :show]
+    
+    # カート
+    resources :cart_items, only: [:index, :update, :destroy, :create]
+    delete "cart_items/destroy_all" => "cart_items#destroy_all"
+    
+    # 注文
+    resources :orders, only: [:new, :create, :index, :show]
+    post "orders/confirm" => "orders#confirm"
+    get "orders/thanks" => "orders#thanks"
+    
+    # 住所
+    resources :addresses, only: [:index, :edit, :create, :update, :destroy]
+    
+    
   end
 
   # 顧客用
