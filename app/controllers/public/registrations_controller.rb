@@ -38,19 +38,19 @@ class Public::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  protected
   
 # 新規会員登録に必要な情報は、姓名、姓名カナ、Email、郵便番号、住所、電話番号、パスワード
-  If you have extra params to permit, append them to the sanitizer.
+  protected
+  # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys:[:last_name,:first_name,:last_name_kana,:first_name_kana,:email,:postal_code,:address,:telepehone_number])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:last_name, :first_name, :last_name_kana, :first_name_kana, :email, :postal_code, :address, :telephone_number])
   end
+  
+
   
   
   def after_sign_up_path_for(resource)
-     # 遷移先のパス
-  end
-    
+    customers_my_page_path
   end
 
   # If you have extra params to permit, append them to the sanitizer.
