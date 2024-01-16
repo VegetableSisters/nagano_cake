@@ -8,7 +8,7 @@ class Customer < ApplicationRecord
   # アソシエーション
   # 親である会員が削除されると、子である住所も削除される
   has_many :addresses, dependent: :destroy
-　has_many :cart_items
+  has_many :cart_items
 
 
 end
