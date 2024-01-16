@@ -1,19 +1,39 @@
 <div class="container">
 
 <div class = "row">
-<h1>顧客のマイページ</h1>
+<h1>マイページ</h1>
 </div>
 
 <strong>登録情報</strong> <%= link_to "編集する", customers_information_edit_path, class: "btn btn-success mb-3" %>
 
-
-<h2>表形式の個人情報一覧</h2>
-<p>氏名</p>
-<p>カナ</p>
-<p>郵便番号</p>
-<p>住所</p>
-<p>電話番号</p>
-<p>メールアドレス</p>
+<table class="table">
+  <tbody>
+    <tr>
+      <th>氏名</th>
+      <td><%= @customer.last_name %> <%= @customer.first_name %></td>
+    </tr>
+    <tr>
+      <th>カナ</th>
+      <td><%= @customer.last_name_kana %> <%= @customer.first_name_kana %></td>
+    </tr>
+    <tr>
+      <th>郵便番号</th>
+      <td><%= @customer.postal_code %></td>
+    </tr>
+    <tr>
+      <th>住所</th>
+      <td><%= @customer.address %></td>
+    </tr>
+    <tr>
+      <th>電話番号</th>
+      <td><%= @customer.telephone_number %></td>
+    </tr>
+    <tr>
+      <th>メールアドレス</th>
+      <td><%= @customer.email %></td>
+    </tr>
+  </tbody>
+</table>
 
 <strong>配送先</strong> <%= link_to " 一覧を見る",  addresses_path, class: "btn btn-primary mb-3" %><br>
 <strong>注文履歴</strong>  <%= link_to " 一覧を見る", orders_path, class: "btn btn-primary mb-3" %>
