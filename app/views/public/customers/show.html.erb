@@ -1,6 +1,11 @@
-<h1>顧客のマイページ</h1>
+<div class="container">
 
-<strong>登録情報</strong>　<p>編集するボタン</p>
+<div class = "row">
+<h1>顧客のマイページ</h1>
+</div>
+
+<strong>登録情報</strong> <%= link_to "編集する", customers_information_edit_path, class: "btn btn-success mb-3" %>
+
 
 <h2>表形式の個人情報一覧</h2>
 <p>氏名</p>
@@ -10,5 +15,7 @@
 <p>電話番号</p>
 <p>メールアドレス</p>
 
-<strong>配送先</strong>　<p>配送先の一覧を見るボタン</p>
-<strong>注文履歴</strong>　<P>注文履歴の一覧を見るボタン</P>
+<strong>配送先</strong> <%= link_to " 一覧を見る",  addresses_path, class: "btn btn-primary mb-3" %><br>
+<strong>注文履歴</strong>  <%= link_to " 一覧を見る", orders_path, class: "btn btn-primary mb-3" %>
+
+</div>
