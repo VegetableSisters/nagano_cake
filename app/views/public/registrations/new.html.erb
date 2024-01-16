@@ -1,63 +1,67 @@
 <div class="container">
-<p>新規会員登録</p>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "public/shared/error_messages", resource: resource %>
   
-  <div class="field">
-  <%= f.label :"名前" %>
-  <%= f.label :"(姓)" %>
-  <%= f.email_field :last_name, autofocus: true, autocomplete: "last_name" %>
-  <%= f.label :"(名)" %>
-  <%= f.email_field :first_name, autofocus: true, autocomplete: "first_name" %>
-  </div>
-  
-  <div class="field">
-  <%= f.label :"フリガナ" %>
-  <%= f.label :"(セイ)" %>
-  <%= f.email_field :last_name_kana, autofocus: true, autocomplete: "last_name_kana" %>
-  <%= f.label :"(メイ)" %>
-  <%= f.email_field :first_name_kana, autofocus: true, autocomplete: "first_name_kana" %>
+  <div class = "row">
+  <p>新規会員登録</p>
   </div>
 
-  <div class="field">
-    <%= f.label :メールアドレス %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "public/shared/error_messages", resource: resource %>
   
-  <div class="field">
-  <%= f.label :"郵便番号(ハイフンなし)" %>
-  <%= f.text_field :postal_code, autofocus: true, autocomplete: "postal_code" %>
-  </div>
-  
-  <div class="field">
-  <%= f.label :"住所" %>
-  <%= f.text_field :address, autofocus: true, autocomplete: "address" %>
-  </div>
-  
-  <div class="field">
-  <%= f.label :"電話番号(ハイフンなし)" %>
-  <%= f.telephone_field :telephone_number, autofocus: true, autocomplete: "telephone_number" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :パスワード %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %>文字以上)</em>
+  <!--field ＠＠＠-grop col????-->
+      <div class="field">
+      <%= f.label :"名前" %>
+      <%= f.label :"(姓)" %>
+      <%= f.email_field :last_name, autofocus: true, autocomplete: "last_name" %>
+      <%= f.label :"(名)" %>
+      <%= f.email_field :first_name, autofocus: true, autocomplete: "first_name" %>
+      </div>
+      
+      <div class="field">
+      <%= f.label :"フリガナ" %>
+      <%= f.label :"(セイ)" %>
+      <%= f.email_field :last_name_kana, autofocus: true, autocomplete: "last_name_kana" %>
+      <%= f.label :"(メイ)" %>
+      <%= f.email_field :first_name_kana, autofocus: true, autocomplete: "first_name_kana" %>
+      </div>
+    
+      <div class="field">
+        <%= f.label :メールアドレス %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      </div>
+      
+      <div class="field">
+      <%= f.label :"郵便番号(ハイフンなし)" %>
+      <%= f.text_field :postal_code, autofocus: true, autocomplete: "postal_code" %>
+      </div>
+      
+      <div class="field">
+      <%= f.label :"住所" %>
+      <%= f.text_field :address, autofocus: true, autocomplete: "address" %>
+      </div>
+      
+      <div class="field">
+      <%= f.label :"電話番号(ハイフンなし)" %>
+      <%= f.telephone_field :telephone_number, autofocus: true, autocomplete: "telephone_number" %>
+      </div>
+    
+      <div class="field">
+        <%= f.label :パスワード %>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %>文字以上)</em>
+        <% end %>
+        <%= f.password_field :password, autocomplete: "new-password" %>
+      </div>
+    
+      <!--"パスワード(確認用)"の””を抜くとエラー、原因は（）の存在-->
+      <div class="field">
+        <%= f.label :"パスワード(確認用)" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      </div>
+    
+      <div class="actions">
+       <%= f.submit "新規登録",class: "btn btn-success mb-3" %>
+      </div>
     <% end %>
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-<!--"パスワード(確認用)"の””を抜くとエラー、原因は（）の存在-->
-  <div class="field">
-    <%= f.label :"パスワード(確認用)" %>
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "新規登録" %>
-  </div>
-<% end %>
 
 
 <p>すでに登録済みの方</p>
