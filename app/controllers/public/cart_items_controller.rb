@@ -1,4 +1,7 @@
 class Public::CartItemsController < ApplicationController
+  # アクセス権限
+  before_action :authenticate_customer!
+  
   def index
   end
 
