@@ -1,18 +1,14 @@
 class CreateOrders < ActiveRecord::Migration[6.1]
   def change
     create_table :orders do |t|
-      
-      # テーブル定義書[注文]より作成
-      t.integer :customer_id
-      t.string :postal_code
-      t.string :address
-      t.string :name
-      t.integer :shipping_cost
-      t.integer :total_payment
-      t.integer :payment_method
-      t.integer :status, default: 0
-    
-
+      t.integer "customer_id", null: false
+      t.string "postal_code", null: false
+      t.text "address", null: false
+      t.string "name", null: false
+      t.integer "shipping_cost", null: false
+      t.integer "total_payment", null: false
+      t.integer "payment_method", null: false
+      t.integer "status", null: false
       t.timestamps
     end
   end
