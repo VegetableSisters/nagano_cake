@@ -1,6 +1,6 @@
 class Public::OrdersController < ApplicationController
   # アクセス権限
-  before_action :authenticate_customer!
+  #before_action :authenticate_customer!
   
   def new
     @order = Order.new
@@ -109,8 +109,7 @@ class Public::OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
-    @order_items = @order.order_details.all
-    @order_details = @order.order_details.all
+    
   end
   
   private

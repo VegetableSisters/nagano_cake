@@ -4,4 +4,12 @@ class Order < ApplicationRecord
   # 親である注文が削除されると、子の注文詳細も削除される
   has_many :order_details, dependent: :destroy
   
+  def self.payment_methods_i18n
+    {
+      credit_card: "クレジットカード",
+      transfer: "銀行振込"
+      # 他の支払い方法を追加する場合はここに追加
+    }
+  end
+  
 end
