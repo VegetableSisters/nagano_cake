@@ -70,7 +70,13 @@
       <%= f.label :"パスワード(確認用)" %>
       <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password", placeholder: "XXXXXX" %>
     </div>
+    
+   <div class="actions col-sm-6 px-sm-0">
+  <%= f.submit "新規登録", class: "btn btn-success mb-4" %>
+</div>
 
+    <% end %> 
+    
     
     <div class="alert alert-light text-center font-weight-bold bg-secondary text-white float-left" role="alert">
       <p class="mb-0">既に登録済みの方</p>
@@ -79,5 +85,5 @@
     </br>
     </br>
     <%= render "public/shared/links" %> からログインしてください
-  <% end %>
+  
 </div>
