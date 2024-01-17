@@ -16,12 +16,15 @@
   <header>
     <nav>
       <div class="container mt-3">
-        <% if customer_signed_in? %>
-          <p>ようこそ<%= current_customer.last_name %>さん！</p>
-        <% end %>
+        <div class="col d-flex justify-content-between align-items-center">
+          <div class="logo" style="text-align: left;">
+            <p>ながのCAKE</p>
+          </div>
+          <ul class="nav">
+            <% if customer_signed_in? %>
+              <p>ようこそ<%= current_customer.last_name %>さん！</p>
+            <% end %>
 
-        <div class="col">
-          <ul class="nav justify-content-end">
             <% if customer_signed_in? %>
               <li class="nav-item">
                 <%= link_to "マイページ", customers_my_page_path, class: "btn btn-outline-dark mr-2" %>
@@ -39,7 +42,6 @@
               <li class="nav-item">
                 <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-dark" %>
               </li>
-            <!-- 非会員 -->
             <% else %>
               <li class="nav-item">
                 <%= link_to "About", root_path, class: "btn btn-outline-dark mr-2" %>
@@ -74,7 +76,6 @@
             </div>
           <% end %>
         </div>
-
       </div>
     </nav>
   </header>
