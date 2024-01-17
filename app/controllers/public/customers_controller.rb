@@ -9,8 +9,11 @@ class Public::CustomersController < ApplicationController
   end
 
   def update
-    # 顧客の登録情報更新　/customers/information
-    # @customer = current_customer
+    @customer = current_customer
+    if @customer.update(customer_params)
+      redirect_to customers_my_page_path(current_customer)
+    else
+      render :customers_information_edit
   end
 
   def confirm
@@ -18,6 +21,10 @@ class Public::CustomersController < ApplicationController
   end
 
   def withdraw
-    # 顧客の退会処理(ステータスの更新)　/customers/withdraw
+    @customer = Customer.find(current_customer.id)
+    @customer.update(is_deleted: false)
+    reset_session
+    flash[:notice] = "退会処理を実行いたしました"
+    redirect_to root_path
   end
 end
