@@ -5,89 +5,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-
   <script src="https://kit.fontawesome.com/28e899c482.js" crossorigin="anonymous"></script>
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  
+  <!--ヘッダーのフォント変更-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
+  <!-- ヘッダーとボタンの色 -->
   <style>
-    /* ヘッダーの背景色 */
     header {
       background-color: #D6B69D;
       margin: 0;
       padding: 0;
       height: 132px;
     }
-
-    /* フッターの背景色 */
-    .footer {
-      background-color: #D6B69D;
-    }
   </style>
-  
 </head>
-
 <body>
-
   <header>
     <nav>
-      <div class="container mt-3">
+      <div class="container">
         <div class="col d-flex justify-content-between align-items-center">
-          <div class="logo" style="text-align: left; font-size: 36px; font-weight: bold;">
-            <p>ながのCAKE</p>
+          <div class="logo" style="text-align: left; font-size: 36px; font-weight: bold; display: flex; align-items: center;">
+            <p style="margin: 0;">ながのCAKE</p>
           </div>
           <ul class="nav">
             <% if customer_signed_in? %>
-              <p>ようこそ<%= current_customer.last_name %>さん！</p>
-            <% end %>
-
-            <% if customer_signed_in? %>
               <li class="nav-item">
-              <%= link_to "マイページ", customers_my_page_path, class: "btn btn-outline-custom mr-2" %>
+                <%= link_to "マイページ", customers_my_page_path, class: "btn btn-outline-custom mr-2" %>
               </li>
               <li class="nav-item">
-              <%= link_to "商品一覧", items_path, class: "btn btn-outline-custom mr-2" %>
+                <%= link_to "商品一覧", items_path, class: "btn btn-outline-custom mr-2" %>
               </li>
               <li class="nav-item">
-              <%= link_to "カート", cart_items_path, class: "btn btn-outline-custom mr-2" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "btn btn-outline-custom" %>
-            </li>
-
+                <%= link_to "カート", cart_items_path, class: "btn btn-outline-custom mr-2" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "btn btn-outline-custom" %>
+              </li>
             <% elsif admin_signed_in? %>
               <li class="nav-item">
                 <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-dark" %>
               </li>
             <% else %>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <li class="nav-item">
-              <%= link_to "About", root_path, class: "btn custom-button mr-2" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "商品一覧", items_path, class: "btn custom-button mr-2" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "カート", cart_items_path, class: "btn custom-button mr-2" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "ログイン", new_customer_session_path, class: "btn custom-button" %>
-            </li>
-
+                <%= link_to "About", root_path, class: "btn custom-button mr-2" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "商品一覧", items_path, class: "btn custom-button mr-2" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "カート", cart_items_path, class: "btn custom-button mr-2" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "ログイン", new_customer_session_path, class: "btn custom-button" %>
+              </li>
+            </div>
             <% end %>
           </ul>
         </div>
-
         <!-- 検索機能 -->
         <div class="col mt-2">
           <%= form_with url: items_path, method: :get, local: true do |f| %>
             <div class="row justify-content-end">
               <div class="col-md-6">
-                <div class="input-group">
-                  <%= f.text_field :q, class: "form-control", placeholder: "Search", value: "" %>
-                  <div class="input-group-append">
-                    <%= button_tag(type: "submit", class: "btn btn-outline-dark btn-sm") do %>
-                      <i class="fas fa-search"></i>
-                    <% end %>
+                <div class="d-flex justify-content-between align-items-center">
+                  <% if customer_signed_in? %>
+                    <p>ようこそ<%= current_customer.last_name %>さん！</p>
+                  <% end %>
+                  <div class="input-group">
+                    <%= f.text_field :q, class: "form-control", placeholder: "Search", value: "" %>
+                    <div class="input-group-append" style="background-color: #CFD2CF; border-radius: 5px;">
+                      <%= button_tag(type: "submit", class: "btn btn-outline-custom btn-sm") do %>
+                        <i class="fas fa-search"></i>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -97,9 +89,8 @@
       </div>
     </nav>
   </header>
-
   <%= yield %>
-
-  <div class="footer" style="height: 100px;"></div>
+  <div class="footer" style="height: 100px; background: linear-gradient(to bottom, white 30px, #D6B69D 30px);">
 </body>
 </html>
+
