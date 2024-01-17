@@ -9,11 +9,13 @@
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   <!--ヘッダーのフォント変更-->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
+  <!--<link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@500&display=swap" rel="stylesheet">-->
+  <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@500&family=Kiwi+Maru:wght@500&family=Shippori+Mincho:wght@500&display=swap" rel="stylesheet">
   <!-- ヘッダーとボタンの色 -->
   <style>
     header {
-      background-color: #D6B69D;
+      background: -webkit-linear-gradient(90deg, rgb(171, 154, 134), rgb(252, 252, 252));
+      background: linear-gradient(90deg, rgb(171, 154, 134), rgb(252, 252, 252));
       margin: 0;
       padding: 0;
       height: 132px;
@@ -90,7 +92,7 @@
     </nav>
   </header>
   <%= yield %>
-  <div class="footer" style="height: 100px; background: linear-gradient(to bottom, white 30px, #D6B69D 30px);">
+  <div class="footer" style="height: 100px; background: -webkit-linear-gradient(90deg, rgb(252, 252, 252), rgb(171, 154, 134)); background: linear-gradient(90deg, rgb(252, 252, 252), rgb(171, 154, 134));">
 </body>
 </html>
 
