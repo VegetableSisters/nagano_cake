@@ -50,6 +50,13 @@
     </ul>
     <%end%>
     
+    <!--検索機能-->
+    <%= form_with url:  items_path, method: :get, local: true do |f| %>
+    <%= f.text_field :q, placeholder: "Search", value: "" %>
+    <%= f.submit "検索", name: nil %>
+    <% end %>
+  
+    
     </div>
     </nav>
     </header>
