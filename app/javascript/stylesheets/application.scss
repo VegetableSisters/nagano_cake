@@ -1,3 +1,15 @@
 @use '~bootstrap/scss/bootstrap';
 
 @import "~bootstrap/scss/bootstrap";
+
+.custom-button {
+  background-color: #6E574B;
+  border-color: #6E574B; 
+  color: #fff;
+}
+
+.custom-button:hover {
+  background-color: #462A16;
+  border-color: #462A16;
+  color: #fff;
+}
