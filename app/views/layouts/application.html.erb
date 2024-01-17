@@ -19,10 +19,11 @@
 
     <!--リンクとリンクの間隔を広げたい-->
     <!--顧客< if customer_signed_in? %><end%>-->
-    <!-- 管理者< elsif admin_signed_in? %>で場合分け、管理者でログインしてないなら<else%>で返す<end%>-->
+    <!-- さらに管理者< elsif admin_signed_in? %>で場合分け、管理者でログインしてないなら<else%>で返す<end%>-->
     
     
     <ul class="nav justify-content-end">
+    <% if customer_signed_in? %>
     <li class="nav-item">
       <%= link_to "マイページ", customers_my_page_path, class: "btn btn-outline-dark" %></li>
     <li class="nav-item">
@@ -32,6 +33,22 @@
     <li class="nav-item">
       <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "btn btn-outline-dark" %></li>
     </ul>
+    
+    <% elsif admin_signed_in? %>
+      <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "btn btn-outline-dark" %></li>
+    
+    <!--非会員-->
+    <%else%>
+      <li class="nav-item">
+      <%= link_to "About", root_path, class: "btn btn-outline-dark" %></li>
+    <li class="nav-item">
+      <%= link_to "商品一覧", items_path, class: "btn btn-outline-dark" %></li>
+     <li class="nav-item">
+      <%= link_to "カート", cart_items_path, class: "btn btn-outline-dark" %></li>
+    <li class="nav-item">
+      <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-dark" %></li>
+    </ul>
+    <%end%>
     
     </div>
     </nav>
