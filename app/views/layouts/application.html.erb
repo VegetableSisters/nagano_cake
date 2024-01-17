@@ -16,12 +16,17 @@
     <header>
     <nav>
     <div class="container">
+    <div class="mt-3">
+    <% if customer_signed_in? %>
+    <p>ようこそ<%= current_customer.last_name %>さん！</p>
+    <% end %>
+    </div>
 
     <!--リンクとリンクの間隔を広げたい-->
     <!--顧客< if customer_signed_in? %><end%>-->
     <!-- さらに管理者< elsif admin_signed_in? %>で場合分け、管理者でログインしてないなら<else%>で返す<end%>-->
     
-    
+    <div calss="col">
     <ul class="nav justify-content-end">
     <% if customer_signed_in? %>
     <li class="nav-item">
@@ -55,6 +60,7 @@
     <%= f.text_field :q, placeholder: "Search", value: "" %>
     <%= f.submit "検索", name: nil %>
     <% end %>
+    </div>
   
     
     </div>
@@ -62,11 +68,8 @@
     </header>
     
       <%= yield %>
-   
+      
+    <div class="footer" style="height: 100px;"></div>
   </body>
-  
-  
-  
-  
   
 </html>
