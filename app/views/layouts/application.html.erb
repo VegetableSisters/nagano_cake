@@ -1,75 +1,86 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>NaganoCake</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>NaganoCake</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <script src="https://kit.fontawesome.com/28e899c482.js" crossorigin="anonymous"></script>
-    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <script src="https://kit.fontawesome.com/28e899c482.js" crossorigin="anonymous"></script>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body>
-    
-    <header>
+<body>
+
+  <header>
     <nav>
-    <div class="container">
-    <div class="mt-3">
-    <% if customer_signed_in? %>
-    <p>ようこそ<%= current_customer.last_name %>さん！</p>
-    <% end %>
-    </div>
+      <div class="container mt-3">
+        <% if customer_signed_in? %>
+          <p>ようこそ<%= current_customer.last_name %>さん！</p>
+        <% end %>
 
-    <!--リンクとリンクの間隔を広げたい-->
-    <!--顧客< if customer_signed_in? %><end%>-->
-    <!-- さらに管理者< elsif admin_signed_in? %>で場合分け、管理者でログインしてないなら<else%>で返す<end%>-->
-    
-    <div calss="col">
-    <ul class="nav justify-content-end">
-    <% if customer_signed_in? %>
-    <li class="nav-item">
-      <%= link_to "マイページ", customers_my_page_path, class: "btn btn-outline-dark" %></li>
-    <li class="nav-item">
-      <%= link_to "商品一覧", items_path, class: "btn btn-outline-dark" %></li>
-     <li class="nav-item">
-      <%= link_to "カート", cart_items_path, class: "btn btn-outline-dark" %></li>
-    <li class="nav-item">
-      <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "btn btn-outline-dark" %></li>
-    </ul>
-    
-    <% elsif admin_signed_in? %>
-      <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "btn btn-outline-dark" %></li>
-    
-    <!--非会員-->
-    <%else%>
-      <li class="nav-item">
-      <%= link_to "About", root_path, class: "btn btn-outline-dark" %></li>
-    <li class="nav-item">
-      <%= link_to "商品一覧", items_path, class: "btn btn-outline-dark" %></li>
-     <li class="nav-item">
-      <%= link_to "カート", cart_items_path, class: "btn btn-outline-dark" %></li>
-    <li class="nav-item">
-      <%= link_to "ログイン", new_customer_session_path, class: "btn btn-outline-dark" %></li>
-    </ul>
-    <%end%>
-    
-    <!--検索機能-->
-    <%= form_with url:  items_path, method: :get, local: true do |f| %>
-    <%= f.text_field :q, placeholder: "Search", value: "" %>
-    <%= f.submit "検索", name: nil %>
-    <% end %>
-    </div>
-  
-    
-    </div>
+        <div class="col">
+          <ul class="nav justify-content-end">
+            <% if customer_signed_in? %>
+              <li class="nav-item">
+                <%= link_to "マイページ", customers_my_page_path, class: "btn btn-outline-dark mr-2" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "商品一覧", items_path, class: "btn btn-outline-dark mr-2" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "カート", cart_items_path, class: "btn btn-outline-dark mr-2" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "btn btn-outline-dark" %>
+              </li>
+            <% elsif admin_signed_in? %>
+              <li class="nav-item">
+                <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-dark" %>
+              </li>
+            <!-- 非会員 -->
+            <% else %>
+              <li class="nav-item">
+                <%= link_to "About", root_path, class: "btn btn-outline-dark mr-2" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "商品一覧", items_path, class: "btn btn-outline-dark mr-2" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "カート", cart_items_path, class: "btn btn-outline-dark mr-2" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "ログイン", new_customer_session_path, class: "btn btn-outline-dark" %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <!-- 検索機能 -->
+        <div class="col mt-2">
+          <%= form_with url: items_path, method: :get, local: true do |f| %>
+            <div class="row justify-content-end">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <%= f.text_field :q, class: "form-control", placeholder: "Search", value: "" %>
+                  <div class="input-group-append">
+                    <%= button_tag(type: "submit", class: "btn btn-outline-dark btn-sm") do %>
+                      <i class="fas fa-search"></i>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+      </div>
     </nav>
-    </header>
-    
-      <%= yield %>
-      
-    <div class="footer" style="height: 100px;"></div>
-  </body>
-  
+  </header>
+
+  <%= yield %>
+
+  <div class="footer" style="height: 100px;"></div>
+</body>
 </html>
