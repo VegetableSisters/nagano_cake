@@ -1,3 +1,4 @@
+<div class="container">
 <strong>本当に退会しますか？</strong>
 
 <p>退会すると、会員登録情報や</br>
@@ -5,5 +6,7 @@
 退会する場合は、「退会する」をクリックしてください。
 </p>
 
-<p>退会しないボタン</p>
-<p>退会するボタン</p>
+<%= link_to "退会しない", customers_my_page_path,class: "btn btn-primary mb-3" %>
+<%= link_to "退会する", customers_withdraw_path, method: :patch, class: "btn btn-danger mb-3", data: { confirm: "本当に退会しますか？" } %>
+
+</div>
