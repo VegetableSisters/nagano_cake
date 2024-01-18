@@ -1,15 +1,15 @@
 class CreateItems < ActiveRecord::Migration[6.1]
   def change
+    
     create_table :items do |t|
-
-      # テーブル定義書[商品]より作成
-      t.integer :genre_id
-      t.string :name
-      t.text :introduction
-      t.integer :price
-      t.boolean :is_active, default: true
-
+      t.integer :genre_id, null: false
+      t.text :introduction, null: false
+      t.string :name, null: false
+      t.integer :price, null: false
+      t.boolean :is_active, null: false, default: "true"
+      
       t.timestamps
+      
     end
   end
 end
