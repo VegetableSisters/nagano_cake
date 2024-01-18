@@ -3,7 +3,7 @@
     <strong>会員情報編集</strong>
   </div>
 
-  <%= form_with model: @customer, url: customers_information_path, local:true do |f| %>
+   <%= form_with model: @customer, url: customers_information_path, local:true do |f| %>
     
     <div class="form-group col-md-6">
       <%= f.label :"名前" %>
@@ -40,9 +40,10 @@
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
     </div>
 
+     <div class="form-group">
     <%= f.submit "編集内容を保存", class: "btn btn-success mb-3" %>
-
     <%= link_to "退会する", customers_confirm_path, class: "btn btn-danger mb-3" %>
+  </div>
   <% end %>
 </div>
 
