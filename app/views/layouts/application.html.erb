@@ -62,6 +62,11 @@
           <span class="logo-text">ながのCAKE</span>
         </div>
 
+
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
         <ul class="navbar-nav">
           <% if customer_signed_in? %>
             <li class="nav-item">
@@ -97,6 +102,7 @@
         </ul>
       </div>
     </nav>
+
 
     <!-- 検索機能 -->
     <div class="container mt-2 search-bar">
