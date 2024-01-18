@@ -1,38 +1,39 @@
-<div class="container">
-  <div class="row">
-    <strong>会員情報編集</strong>
-  </div>
-
-   <%= form_with model: @customer, url: customers_information_path, local:true do |f| %>
-    
-    <div class="form-group col-md-6">
-      <%= f.label :"名前" %>
-      <div class="input-group">
-        <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", class: "form-control" %>
-        <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", class: "form-control" %>
-      </div>
+<%= form_with model: @customer, url: customers_information_path, local: true do |f| %>
+  <div class="container">
+    <div class="row">
+      <strong>会員情報編集</strong>
     </div>
-    <div class="form-group col-md-6">
-      <%= f.label :"フリガナ" %>
-      <div class="input-group">
-        <%= f.text_field :last_name_kana, autofocus: true, autocomplete: "last_name_kana", class: "form-control" %>
-        <%= f.text_field :first_name_kana, autofocus: true, autocomplete: "first_name_kana", class: "form-control" %>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= f.label :"名前" %>
+        <div class="input-group">
+          <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", class: "form-control", value: @customer.last_name %>
+          <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", class: "form-control", value: @customer.first_name %>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <%= f.label :"フリガナ" %>
+        <div class="input-group">
+          <%= f.text_field :last_name_kana, autofocus: true, autocomplete: "last_name_kana", class: "form-control", value: @customer.last_name_kana %>
+          <%= f.text_field :first_name_kana, autofocus: true, autocomplete: "first_name_kana", class: "form-control", value: @customer.first_name_kana %>
+        </div>
       </div>
     </div>
 
     <div class="form-group">
       <%= f.label :"郵便番号（ハイフンなし）" %>
-      <%= f.text_field :postal_code, autofocus: true, autocomplete: "postal_code", class: "form-control" %>
+      <%= f.text_field :postal_code, autofocus: true, autocomplete: "postal_code", class: "form-control", value: @customer.postal_code %>
     </div>
 
     <div class="form-group">
       <%= f.label :"住所(ハイフンなし)" %>
-      <%= f.text_field :address, autofocus: true, autocomplete: "address", class: "form-control" %>
+      <%= f.text_field :address, autofocus: true, autocomplete: "address", class: "form-control", value: @customer.address %>
     </div>
 
     <div class="form-group">
       <%= f.label :"電話番号" %>
-      <%= f.telephone_field :telephone_number, autofocus: true, autocomplete: "telephone_number", class: "form-control" %>
+      <%= f.telephone_field :telephone_number, autofocus: true, autocomplete: "telephone_number", class: "form-control", value: @customer.telephone_number %>
     </div>
 
     <div class="form-group">
@@ -40,10 +41,9 @@
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
     </div>
 
-     <div class="form-group">
-    <%= f.submit "編集内容を保存", class: "btn btn-success mb-3" %>
-    <%= link_to "退会する", customers_confirm_path, class: "btn btn-danger mb-3" %>
+    <div class="form-group">
+      <%= f.submit "編集内容を保存", class: "btn btn-success mb-3" %>
+      <%= link_to "退会する", customers_confirm_path, class: "btn btn-danger mb-3" %>
+    </div>
   </div>
-  <% end %>
-</div>
-
+<% end %>
