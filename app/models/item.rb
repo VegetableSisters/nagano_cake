@@ -1,4 +1,5 @@
 class Item < ApplicationRecord
+  scope :active, -> { where(is_active: true) }
 
   # アソシエーション
   belongs_to :genre, optional: true
