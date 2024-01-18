@@ -11,9 +11,8 @@ Rails.application.routes.draw do
     resources :homes, only: [:top]
   end
 
-  namespace :public, path: '' do
-    root to: "homes#top"
-    get "about" => "homes#about"
+  scope module: 'public' do
+    root to: "homes#about"
     
     # 会員
     get "customers/my_page" => "customers#show"
