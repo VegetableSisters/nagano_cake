@@ -1,5 +1,11 @@
 class ApplicationController < ActionController::Base
   
+   def after_sign_in_path_for(resource)
+    customers_show_path
+  end
+  
+  
+  
   # 検索機能　Gem ransackより
 before_action :set_search
 
