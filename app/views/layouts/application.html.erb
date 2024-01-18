@@ -1,16 +1,134 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>NaganoCake</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>NaganoCake</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <script src="https://kit.fontawesome.com/28e899c482.js" crossorigin="anonymous"></script>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@500&family=Kiwi+Maru:wght@500&family=Shippori+Mincho:wght@500&display=swap" rel="stylesheet">
+  <style>
+    header {
+      background-color: #D3CBC1;
+      padding: 10px 0;
+    }
+    .footer {
+      height: 100px;
+    }
+    .footer-top {
+      height: 30px;
+      background-color: white;
+    }
+    .footer-bottom {
+      height: 70px;
+      background-color: #D3CBC1;
+    }
+    .navbar {
+      background-color: #D3CBC1;
+    }
+    .navbar-nav {
+      margin-left: auto;
+    }
+    .navbar-brand-container {
+      display: flex;
+      align-items: center;
+    }
+    .logo-img {
+      height: 100px;
+    }
+    .logo-text {
+      font-family: 'Shippori Mincho', sans-serif;
+      font-size: 100%;
+      margin-left: 10px;
+    }
+    .navbar-nav .nav-item {
+      margin-left: 10px;
+    }
+    .search-bar {
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <div class="navbar-brand-container">
+          <%= link_to root_path do %>
+            <%= image_tag("logo.png", alt: "ながのCAKE ロゴ", class: "logo-img") %>
+          <% end %>
+          <span class="logo-text">ながのCAKE</span>
+        </div>
+
 
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= yield %>
-  </body>
+        <ul class="navbar-nav">
+          <% if customer_signed_in? %>
+            <li class="nav-item">
+              <%= link_to "マイページ", customers_my_page_path, class: "btn btn-outline-custom" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "商品一覧", items_path, class: "btn btn-outline-custom" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "カート", cart_items_path, class: "btn btn-outline-custom" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "btn btn-outline-custom" %>
+            </li>
+          <% elsif admin_signed_in? %>
+            <li class="nav-item">
+              <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-dark" %>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to "About", root_path, class: "btn custom-button" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "商品一覧", items_path, class: "btn custom-button" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "カート", cart_items_path, class: "btn custom-button" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "ログイン", new_customer_session_path, class: "btn custom-button" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+
+
+    <!-- 検索機能 -->
+    <div class="container mt-2 search-bar">
+      <%= form_with url: items_path, method: :get, local: true do |f| %>
+        <div class="row justify-content-end">
+          <div class="col-md-6">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="input-group">
+                <%= f.text_field :q, class: "form-control", placeholder: "Search", value: "" %>
+                <div class="input-group-append">
+                  <%= button_tag(type: "submit", class: "btn btn-outline-custom btn-sm") do %>
+                    <i class="fas fa-search"></i>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </header>
+
+  <%= yield %>
+  <div class="footer">
+    <div class="footer-top"></div>
+    <div class="footer-bottom"></div>
+  </div>
+</body>
 </html>

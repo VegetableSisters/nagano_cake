@@ -1,20 +1,19 @@
 class Public::CustomersController < ApplicationController
-  # アクセス権限
-  before_action :authenticate_customer!
   
   def show
-    # 顧客のマイページ　URL：/customers/my_page　
     @customer = current_customer
   end
 
   def edit
-    # 顧客の登録情報編集画面　/customers/information/edit
-    # @customer = current_customer
+    @customer = current_customer
   end
 
   def update
-    # 顧客の登録情報更新　/customers/information
-    # @customer = current_customer
+    @customer = current_customer
+    if @customer.update(customer_params)
+      redirect_to customers_my_page_path(current_customer)
+    else
+      render :customers_information_edit
   end
 
   def confirm
@@ -22,6 +21,11 @@ class Public::CustomersController < ApplicationController
   end
 
   def withdraw
-    # 顧客の退会処理(ステータスの更新)　/customers/withdraw
+    @customer = Customer.find(current_customer.id)
+    @customer.update(is_deleted: false)
+    reset_session
+    flash[:notice] = "退会処理が完了しました"
+    redirect_to root_path
   end
+end
 end
