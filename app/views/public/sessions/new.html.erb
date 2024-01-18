@@ -1,25 +1,33 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-6 offset-md-3">
-      <h2>ログイン</h2>
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class="form-group">
-          <%= f.label :メールアドレス %>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
-        </div>
+      <h2>マイページ</h2>
+      <!-- ここにマイページのコンテンツを追加 -->
 
-        <div class="form-group">
-          <%= f.label :パスワード %>
-          <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
-        </div>
+      <!-- 例：登録情報の表示 -->
+      <div class="form-group">
+        <strong>登録情報</strong> <%= link_to "編集する", customers_information_edit_path, class: "btn btn-success btn-block mb-3" %>
+        <table class="table">
+          <tbody>
+            <!-- ここに登録情報の詳細を表示 -->
+          </tbody>
+        </table>
+      </div>
 
-        <div class="form-group">
-          <%= f.submit "ログイン", class: "btn btn-primary btn-block mb-3" %>
-        </div>
-      <% end %>
+      <!-- 例：配送先情報の表示 -->
+      <div class="form-group">
+        <strong>配送先</strong> <%= link_to "一覧を見る", addresses_path, class: "btn btn-primary btn-block mb-3" %>
+        <!-- ここに配送先情報の詳細を表示 -->
+      </div>
 
-      <p class="text-center">会員登録がお済みではない方</p>
-      <%= render "public/shared/links" %>から新規登録を行ってください
+      <!-- 例：注文履歴の表示 -->
+      <div class="form-group">
+        <strong>注文履歴</strong> <%= link_to "一覧を見る", orders_path, class: "btn btn-primary btn-block mb-3" %>
+        <!-- ここに注文履歴の詳細を表示 -->
+      </div>
+
+      <!-- 他のコンテンツも同様に追加 -->
+
     </div>
   </div>
 </div>
