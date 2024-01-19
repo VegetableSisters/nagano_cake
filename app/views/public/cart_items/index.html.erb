@@ -1,42 +1,47 @@
  <div class="container">
-  <div class="row">
-    <div class="col text-center">
-      <strong class="mr-2">ショッピングカート</strong>
-    </div>
-    
-    <table class="table">
-    <thead>
-      <tr>
-        <th>商品名</th>
-        <th>単価</th>
-        <th>数量</th>
-        <th>小計</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <!--< @cart_item.each do |cart_item| %>-->
+ <div class="row">
+  <div class="col text-center">
+    <strong class="mr-2">ショッピングカート</strong>
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>商品名</th>
+      <th>単価</th>
+      <th>数量</th>
+      <th>小計</th>
+      <th></th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% if @cart_item.present? %>
+      <% @cart_item.each do |cart_item| %>
         <tr>
           <td>
-            商品写真
+            商品写真<%= cart_item.item.name %>
           </td>
-          <td>
-            単価
-          </td>
-          <td>
-            小計
-          </td>
-          <td>
-            削除ボタン
-          </td>
-         
-         
-         
-         
+          <td>単価</td>
+          <td>数量</td>
+          <td>小計</td>
+          <td>削除ボタン</td>
         </tr>
-    </tbody>
-  </table>
-    
-    
-    </div>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="5">カートに商品がありません</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <% if @cart_item.present? %>
+    <%= link_to "カートを空にする", destroy_all_cart_items_path, method: :delete, class: "btn btn-danger" %>
+    <%= link_to "情報入力に進む", new_order_path, class: "btn btn-success" %>
+  <% end %>
+  <%= link_to "買い物を続ける", items_path, class: "btn btn-primary" %>
+</div>
 </div>
