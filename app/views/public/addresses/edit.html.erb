@@ -1,2 +1,10 @@
-<h1>Public::Addresses#edit</h1>
-<p>Find me in app/views/public/addresses/edit.html.erb</p>
+<h1>配送先編集</h1>
+<%= form_with model: @addresse, url: address_path, method: :patch do |f| %>
+  <%= f.label :postal_code, "郵便番号（ハイフンなし）" %>
+  <%= f.text_field :postal_code, placeholder: '0000000' %>
+  <%= f.label :address, "住所" %>
+  <%= f.text_area :address, placeholder: '東京都渋谷区代々木神園町0-0' %>
+  <%= f.label :name, "宛名" %>
+  <%= f.text_field :name, placeholder: '令和道子' %>
+  <%= f.submit '変更内容を保存' %>
+<% end %>
