@@ -48,10 +48,20 @@
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
       </td>
     </tr>
-    <tr>
+     <tr>
       <th>ステータス</th>
+      <!--退会をチェックして更新をかけるとエラーになる-->
       <td style="background-color: white;">
-      <!--有効か退会をチェックで選べる-->
+        <%= form_with model: @customer, url: customers_information_path, local: true do |f| %>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :is_deleted, true, class: "form-check-input" %>
+            <%= f.label :有効, class: "form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :is_deleted, false, class: "form-check-input" %>
+            <%= f.label :退会, class: "form-check-label" %>
+          </div>
+        <% end %>
       </td>
     </tr>
   </tbody>
