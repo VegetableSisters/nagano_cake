@@ -1,6 +1,5 @@
  <div class="d-flex justify-content-start align-items-center mb-4">
         <strong class="mr-2">登録情報</strong>
-        <%= link_to "編集する", edit_admin_customer_path, class: "btn btn-success btn-sm" %>
       </div>
 
       <table class="table table-bordered bg-light">
@@ -40,3 +39,6 @@
           </tr>
         </tbody>
       </table>
+      
+      <%= link_to "編集する", edit_admin_customer_path, class: "btn btn-success btn-sm" %>
+      <%= link_to "注文履歴一覧を見る", admin_order_path, class: "btn btn-primary btn-sm" %>
