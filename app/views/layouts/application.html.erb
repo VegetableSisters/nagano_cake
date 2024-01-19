@@ -49,6 +49,27 @@
     .search-bar {
       text-align: right;
     }
+    .search-box {
+      position: relative;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .search-box input[type="search"] {
+      width: 100%;
+      padding: 5px 10px 5px 35px; 
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    .search-box i {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      color: #CFD2CF;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -61,11 +82,6 @@
           <% end %>
           <span class="logo-text">ながのCAKE</span>
         </div>
-
-
-    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
 
         <ul class="navbar-nav">
           <% if customer_signed_in? %>
@@ -82,9 +98,22 @@
               <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "btn custom-button" %>
             </li>
           <% elsif admin_signed_in? %>
+          <li class="nav-item">
+              <%= link_to "商品一覧", admin_items_path, class: "btn custom-button" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "会員一覧", admin_customers_path, class: "btn custom-button" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "注文履歴一覧", admin_root_path, class: "btn custom-button" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "ジャンル一覧", admin_genres_path, class: "btn custom-button" %>
+            </li>
             <li class="nav-item">
               <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn custom-button" %>
             </li>
+            
           <% else %>
             <li class="nav-item">
               <%= link_to "About", root_path, class: "btn custom-button" %>
@@ -103,26 +132,24 @@
       </div>
     </nav>
 
-
-    <!-- 検索機能 -->
     <div class="container mt-2 search-bar">
-      <%= form_with url: items_path, method: :get, local: true do |f| %>
-        <div class="row justify-content-end">
-          <div class="col-md-6">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="input-group">
-                <%= f.text_field :q, class: "form-control", placeholder: "Search", value: "" %>
-                <div class="input-group-append">
-                  <%= button_tag(type: "submit", class: "btn btn-outline-custom btn-sm") do %>
-                    <i class="fas fa-search"></i>
-                  <% end %>
-                </div>
-              </div>
+  <%= form_with url: items_path, method: :get, local: true do |f| %>
+    <div class="row justify-content-end">
+      <div class="col-md-6">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="input-group">
+            <%= f.text_field :q, class: "form-control", placeholder: "商品名で検索", value: "" %>
+            <div class="input-group-append">
+              <%= button_tag(type: "submit", class: "btn btn-outline-custom btn-sm") do %>
+                <i class="fas fa-search"></i>
+              <% end %>
             </div>
           </div>
         </div>
-      <% end %>
+      </div>
     </div>
+  <% end %>
+</div>
   </header>
 
   <%= yield %>
