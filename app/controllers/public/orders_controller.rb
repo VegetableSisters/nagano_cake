@@ -1,20 +1,32 @@
 class Public::OrdersController < ApplicationController
   # アクセス権限
-  #before_action :authenticate_customer!
+  before_action :authenticate_customer!
   
-  def
+  def new
     @order = Order.new
   end
 
   def confirm
     @order = Order.new(order_params)
+    if params[:order][:address_id].present?
     @address = Address.find(params[:order][:address_id])
+    @order.postal_code = @address.postal_code
+    @order.address = @address.address
+    @order.name = @address.name
+    else
+      # エラーハンドリングのために適切な処理を追加する
+      # 例えば、リダイレクトやエラーメッセージの表示など
+      flash[:error] = "適切なアドレスが指定されていません。"
+      render 'public/orders/new'
+      return
+    end
+    
     @order.postal_code = @address.postal_code
     @order.address = @address.address
     @order.name = @address.name
     
     @shipping_cost = 800
-    @selected_pay_method = params[:order][:pay_method]
+    @selected_payment_method = params[:order][:payment_method]
     @cart_items = CartItem.where(customer_id: current_customer.id)
   
     # 商品合計額の計算
@@ -26,13 +38,14 @@ class Public::OrdersController < ApplicationController
   
     @total_price = @shipping_cost + @cart_items_price
     @address_type = params[:order][:address_type]
-  
+    
+    
     case @address_type
     when "customer_address"
       @selected_address = current_customer.post_code + " " + current_customer.address + " " + current_customer.last_name + current_customer.last_name
     when "registered_address"
-      unless params[:order][:registered_address_id] == ""
-        selected = Address.find(params[:order][:registered_address_id])
+      unless params[:order][:address_id] == ""
+        selected = Address.find(params[:order][:address_id])
         @selected_address = selected.postal_code + " " + selected.address + " " + selected.name
       else
         render :new
@@ -47,6 +60,7 @@ class Public::OrdersController < ApplicationController
   end
 
   def thanks
+    redirect_to thanks_orders_path
   end
 
   def create
@@ -72,13 +86,12 @@ class Public::OrdersController < ApplicationController
       when "customer_address"
         @order.postal_code = current_customer.postal_code
         @order.address = current_customer.address
-        @order.name = current_customer.last_name + current_member.last_name
+        @order.name = current_customer.last_name + current_customer.first_name
       when "registered_address"
-        Address.find(params[:order][:registered_address_id])
-        selected = Addresse.find(params[:order][:registered_address_id])
-        @order.postal_code = selected.postal_code
-        @order.address = selected.address
-        @order.name = selected.name
+        @order.registered_address = Address.find(params[:order][:registered_address_id])
+  @order.postal_code = @order.registered_address.postal_code
+  @order.address = @order.registered_address.address
+  @order.name = @order.registered_address.name
       when "new_address"
         @order.postal_code = params[:order][:new_postal_code]
         @order.address = params[:order][:new_address]
@@ -108,12 +121,19 @@ class Public::OrdersController < ApplicationController
   end
 
   def show
+    if params[:id] == "confirm"
+    flash[:error] = "無効な注文IDです。"
+    redirect_to orders_path
+  else
     @order = Order.find(params[:id])
+  end
     
   end
   
   private
   def order_params
-    params.require(:order).permit(:payment_method)
+    params.require(:order).permit(:payment_method, :address_type, :new_postal_code, :new_address, :new_name)
   end
+  
+  
 end
