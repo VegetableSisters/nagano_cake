@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     get "orders/thanks" => "orders#thanks"
 
     # 住所
-    resources :addresses, only: [:index, :edit, :create, :update, :destroy]
+    resources :addresses, only: [:index, :create, :edit, :update, :destroy]
 
 
   end
