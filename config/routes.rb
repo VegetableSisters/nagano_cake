@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
     # カート
     resources :cart_items, only: [:index, :update, :destroy, :create]
-    delete "cart_items/destroy_all" => "cart_items#destroy_all"
+    delete '/cart_items/destroy_all', to: 'public/cart_items#destroy_all', as: 'cart_items_destroy_all'
 
     # 注文
     resources :orders, only: [:new, :create, :index, :show]

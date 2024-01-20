@@ -1,27 +1,48 @@
+<div class="container">
 <h1>商品編集</h1>
 
-<%= form_with model: @item, url: admin_item_path(@item), method: :patch do |f| %>
-  <h4>商品画像</h4>
-  <%= f.file_field :image, accept: "image/*" %>
+<%= form_with model: @item, url: admin_item_path(@item), method: :patch, html: {class: 'needs-validation', novalidate: true} do |f| %>
 
-  <h4>商品名</h4>
-  <%= f.text_field :name, placeholder: '商品名' %>
+  <div class="mb-3">
+    <h4>商品画像</h4>
+    <%= f.file_field :image, accept: "image/*" %>
+  </div>
 
-  <h4>商品説明</h4>
-  <%= f.text_area :introduction, placeholder: 'ここに説明文を記述します' %>
+  <div class="mb-3">
+    <h4>商品名</h4>
+    <%= f.text_field :name, placeholder: '商品名', class: "form-control" %>
+  </div>
 
-  <h4>ジャンル</h4>
-  <%= f.collection_select :genre_id, @genres, :id, :name, {include_blank: "--選択してください--"} %>
+  <div class="mb-3">
+    <h4>商品説明</h4>
+    <%= f.text_area :introduction, placeholder: 'ここに説明文を記述します', class: "form-control" %>
+  </div>
 
-  <h4>税抜価格</h4>
-  <%= f.text_field :price, placeholder: '1000' %>
+  <div class="mb-3">
+    <h4>ジャンル</h4>
+    <%= f.collection_select :genre_id, @genres, :id, :name, {include_blank: "--選択してください--"}, {class: "form-select"} %>
+  </div>
 
-  <h4>販売ステータス</h4>
-  <%= f.radio_button :is_active, true %>
-  <%= f.label :is_active, "販売中" %>
-  <%= f.radio_button :is_active, false %>
-  <%= f.label :is_active, "販売停止中" %>
+  <div class="mb-3">
+    <h4>税抜価格</h4>
+    <%= f.text_field :price, placeholder: '1000', class: "form-control" %>
+  </div>
 
-  <%= f.submit '変更を保存' %>
+  <div class="mb-4">
+    <h4>販売ステータス</h4>
+    <div class="form-check form-check-inline">
+      <%= f.radio_button :is_active, true, class: "form-check-input" %>
+      <%= f.label :is_active, "販売中", class: "form-check-label" %>
+    </div>
+    <div class="form-check form-check-inline">
+      <%= f.radio_button :is_active, false, class: "form-check-input" %>
+      <%= f.label :is_active, "販売停止中", class: "form-check-label" %>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <%= f.submit '変更を保存', class: 'btn btn-primary' %>
+  </div>
 
 <% end %>
+</div>

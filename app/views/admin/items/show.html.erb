@@ -1,21 +1,48 @@
-<h1>商品詳細</h1>
+<div class="container mt-4">
+  <h1 class="mb-4 text-center">商品詳細</h1>
 
-<%= image_tag @item.image, size: "200x200" %>
-<h2>商品名</h2>
-<P><%= @item.name %></P>
-<h2>商品説明</h2>
-<P><%= @item.introduction %></P>
-<h2>ジャンル</h2>
-<P><%= @item.genre.name %></P>
-<h2>税込価格（税抜き価格）</h2>
-<p><%= @item.add_tax_price.to_s(:delimited) %> </p>
-<p><%= @item.price %>円</p>
-<h2>販売ステータス</h2>
-<% if @item.is_active %>
-  <p><strong>販売中</strong></p>
-<% elsif %>
-  <p><strong>販売停止中</strong></p>
-<% end %>
+  <div class="row justify-content-center mb-4">
+    <div class="col-md-6">
+      <% if @item.image.attached? %>
+        <%= image_tag @item.image, class: "img-fluid rounded" %>
+      <% else %>
+        <%= image_tag 'no_image', class: "img-fluid rounded" %>
+      <% end %>
+    </div>
+  </div>
 
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <th>商品名</th>
+        <td><%= @item.name %></td>
+      </tr>
+      <tr>
+        <th>商品説明</th>
+        <td><%= @item.introduction %></td>
+      </tr>
+      <tr>
+        <th>ジャンル</th>
+        <td><%= @item.genre.name %></td>
+      </tr>
+      <tr>
+        <th>税込価格（税抜き価格）</th>
+        <td>¥<%= @item.add_tax_price.to_s(:delimited) %>円 / ¥<%= @item.price %>円</td>
+      </tr>
+      <tr>
+        <th>販売ステータス</th>
+        <td>
+          <% if @item.is_active %>
+            <span class="badge badge-success">販売中</span>
+          <% else %>
+            <span class="badge badge-secondary">販売停止中</span>
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-<%= link_to '編集する', edit_admin_item_path(@item) %>
+  <div class="text-center mt-4">
+    <%= link_to '編集する', edit_admin_item_path(@item), class: "btn btn-primary" %>
+  </div>
+</div>
