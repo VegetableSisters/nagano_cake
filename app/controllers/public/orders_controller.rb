@@ -2,7 +2,7 @@ class Public::OrdersController < ApplicationController
   # アクセス権限
   #before_action :authenticate_customer!
   
-  def new
+  def
     @order = Order.new
   end
 
