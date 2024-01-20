@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 2024_01_16_061057) do
   end
 
   create_table "orders", force: :cascade do |t|
+
     t.integer "customer_id"
     t.string "postal_code"
     t.string "address"
@@ -124,6 +125,7 @@ ActiveRecord::Schema.define(version: 2024_01_16_061057) do
     t.integer "total_payment"
     t.integer "payment_method"
     t.integer "status", default: 0
+
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
