@@ -1,14 +1,16 @@
 <h1>配送先登録/一覧</h1>
 
 <%= form_with model: @address, url: '/addresses', method: :post do |f| %>
-  <%= f.label :postal_code, "郵便番号（ハイフンなし）" %>
-  <%= f.text_field :postal_code, placeholder: '0000000' %>
-  <%= f.label :address, "住所" %>
-  <%= f.text_area :address, placeholder: '東京都渋谷区代々木神園町0-0' %>
-  <%= f.label :name, "宛名" %>
-  <%= f.text_field :name, placeholder: '令和道子' %>
-  <%= f.submit '新規登録' %>
+  <div>郵便番号（ハイフンなし）</div>
+  <div><%= f.text_field :postal_code, placeholder: '0000000' %></div>
+  <div>住所</div>
+  <div><%= f.text_field :address, placeholder: '東京都渋谷区代々木神園町0-0' %></div>
+  <div>宛名</div>
+  <div><%= f.text_field :name, placeholder: '令和道子' %></div>
+  <div><%= f.submit '新規登録' %></div>
 <% end %>
+
+
 
 <table class="table">
   <thead>
@@ -19,8 +21,9 @@
       <th></th>
     </tr>
   </thead>
-<% @addresses.each do |address| %>
+
   <tbody>
+  <% @addresses.each do |address| %>
     <tr>
       <td><%= address.postal_code %></td>
       <td><%= address.address %></td>
@@ -30,6 +33,6 @@
         <%= link_to '削除する', addresses_path(address) %>
       </td>
     </tr>
+  <% end %>
   </tbody>
-<% end %>
 </table>
