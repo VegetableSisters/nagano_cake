@@ -3,15 +3,16 @@
   <div class="row">
     <div class="offset-1 col">
       <h3><strong class="bg-secondary text-light">注文情報入力</strong></h3>
-        <%= form_with model: Order.new, url: orders_confirm_path, method: :post do |f| %>
+        <%= form_with model: @order, url: orders_confirm_path, method: :post do |f| %>
     </div>
   <div class="col-md-12">
     <h3><strong>支払方法</strong></h3>
-     <%= f.radio_button :payment_method, :credit_card, checked: true %>
-     <%= f.label :payment_method, Order.payment_methods_i18n[:credit_card], {value: :credit_card} %>
+     <%= f.radio_button :payment_method, Order.payment_methods.key(0), checked: true  %>
+     <%= f.label :payment_method_credit_card, Order.payment_methods_i18n[:credit_card] %>
     <br>
-    <%= f.radio_button :payment_method, :transfer %>
-    <%= f.label :payment_method, Order.payment_methods_i18n[:transfer], {value: :transfer} %>
+    <%= f.radio_button :payment_method, Order.payment_methods.key(1) %>
+    <%= f.label :payment_method_transfer, Order.payment_methods_i18n[:transfer]%>
+
 
     <div>
     <h3><strong>お届け先</strong></h3>
