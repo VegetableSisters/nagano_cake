@@ -1,13 +1,26 @@
-<%= image_tag @item.image, size: "200x200" %>
-<h2><%= @item.name %></h2>
-<P><%= @item.introduction %></P>
-<p>¥<%= @item.add_tax_price.to_s(:delimited) %>(税込)</p>
-
-<% if @item.is_active == true %>
-  <%= form_with model: @cart_item, url: cart_items_path, method: :post do |f| %>
-    <%= f.label :amount, "個数選択" %>
-      <%= f.select :amount, [1,2,3,4,5,6,7,8,9,10] %>
-    <%= f.hidden_field :item_id, :value => @item.id %>
-    <%= f.submit "カートに入れる" %>
-  <% end %>
-<% end %>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6">
+      <% if @item.image.attached? %>
+          <%= image_tag @item.image, class: "img-fluid" %>
+      <% else %>
+          <%= image_tag 'no_image', class: "img-fluid" %>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <h2><%= @item.name %></h2>
+      <p><%= @item.introduction %></p>
+      <p class="lead">¥<%= @item.add_tax_price.to_s(:delimited) %>(税込)</p>
+      <% if @item.is_active == true %>
+        <%= form_with model: @cart_item, url: cart_items_path, method: :post, class: 'form-inline' do |f| %>
+          <div class="form-group mb-">
+            <%= f.label :amount, "個数選択", class: 'mr-2' %>
+            <%= f.select :amount, [1,2,3,4,5,6,7,8,9,10], {}, class: 'form-control mr-2' %>
+          </div>
+          <%= f.hidden_field :item_id, value: @item.id %>
+          <%= f.submit "カートに入れる", class: 'btn btn-primary' %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
