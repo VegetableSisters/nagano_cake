@@ -7,54 +7,36 @@ class Public::OrdersController < ApplicationController
   end
 
   def confirm
+    @cart_items = current_customer.cart_items
     @order = Order.new(order_params)
-    if params[:order][:address_id].present?
-    @address = Address.find(params[:order][:address_id])
-    @order.postal_code = @address.postal_code
-    @order.address = @address.address
-    @order.name = @address.name
-    else
-      # エラーハンドリングのために適切な処理を追加する
-      # 例えば、リダイレクトやエラーメッセージの表示など
-      flash[:error] = "適切なアドレスが指定されていません。"
-      render 'public/orders/new'
-      return
-    end
-    
-    @order.postal_code = @address.postal_code
-    @order.address = @address.address
-    @order.name = @address.name
-    
-    @shipping_cost = 800
-    @selected_payment_method = params[:order][:payment_method]
-    @cart_items = CartItem.where(customer_id: current_customer.id)
-  
-    # 商品合計額の計算
-    ary = []
-    @cart_items.each do |cart_item|
-      ary << cart_item.item.price * cart_item.quantity
-    end
-    @cart_items_price = ary.sum
-  
-    @total_price = @shipping_cost + @cart_items_price
-    @address_type = params[:order][:address_type]
-    
-    
-    case @address_type
-    when "customer_address"
-      @selected_address = current_customer.post_code + " " + current_customer.address + " " + current_customer.last_name + current_customer.last_name
-    when "registered_address"
-      unless params[:order][:address_id] == ""
-        selected = Address.find(params[:order][:address_id])
-        @selected_address = selected.postal_code + " " + selected.address + " " + selected.name
+    @order.customer_id = current_customer.id
+    @order.payment_method = params[:order][:payment_method]
+    @total_payment = CartItem.cart_items_total_price(@cart_items)
+    @order.shipping_cost = 800
+
+    if params[:order][:address_option] == "0"
+      @order.postal_code = current_customer.postal_code
+      @order.address = current_customer.address
+      @order.name = current_customer.full_name_a
+      render 'confirm'
+    elsif params[:order][:address_option] == "1"
+      @address = Address.find(params[:order][:address_id])
+      @order.postal_code = @address.postal_code
+      @order.address = @address.address
+      @order.name = @address.name
+      render 'confirm'
+    elsif params[:order][:address_option] == "2"
+      @address = current_customer.addresses.new
+      @address.address = params[:order][:address]
+      @address.name = params[:order][:name]
+      @address.postal_code = params[:order][:postal_code]
+      @address.customer_id = current_customer.id
+      if @address.save
+      @order.postal_code = @address.postal_code
+      @order.name = @address.name
+      @order.address = @address.address
       else
-        render :new
-      end
-    when "new_address"
-      unless params[:order][:new_postal_code] == "" && params[:order][:new_address] == "" && params[:order][:new_name] == ""
-        @selected_address = params[:order][:new_postal_code] + " " + params[:order][:new_address] + " " + params[:order][:new_name]
-      else
-        render :new
+       render 'new'
       end
     end
   end
