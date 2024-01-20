@@ -33,12 +33,7 @@
       align-items: center;
     }
     .logo-img {
-      height: 100px;
-    }
-    .logo-text {
-      font-family: 'Shippori Mincho', sans-serif;
-      font-size: 100%;
-      margin-left: 10px;
+      height: 160px; 
     }
     .navbar-nav .nav-item {
       margin-left: 10px;
@@ -57,105 +52,99 @@
   </style>
 </head>
 <body>
-  <header>
-    
-<nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container">
-    <div class="navbar-brand-container">
-      <%= link_to root_path do %>
-        <%= image_tag("logo.png", alt: "ながのCAKE ロゴ", class: "logo-img") %>
-      <% end %>
-      <span class="logo-text">ながのCAKE</span>
+ <header>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <div class="navbar-brand-container d-flex flex-column align-items-center">
+          <%= link_to root_path do %>
+            <%= image_tag("logo.png", alt: "ながのCAKE ロゴ", class: "logo-img") %> <!-- ロゴ画像を追加 -->
+          <% end %>
+          <!--メッセージ-->
+          <% if admin_signed_in? %>
+            <span class="mx-2">管理者さん、ようこそ！</span>
+          <% elsif customer_signed_in? %>
+            <span class="mx-2"><%= current_customer.last_name %> <%= current_customer.first_name %>さん、ようこそ！</span>
+          <% else %>
+            <span class="mx-2">ゲストさん、ようこそ！</span>
+          <% end %>
+        </div>
+      <ul class="navbar-nav">
+        <% if admin_signed_in? %>
+          <!--管理者-->
+          <li class="nav-item">
+            <%= link_to "商品一覧", admin_items_path, class: "btn custom-button" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "会員一覧", admin_customers_path, class: "btn custom-button" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "注文履歴一覧", admin_root_path, class: "btn custom-button" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "ジャンル一覧", admin_genres_path, class: "btn custom-button" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn custom-button" %>
+          </li>
+  
+        <% elsif customer_signed_in? %>
+          <!--会員-->
+          <li class="nav-item">
+            <%= link_to "マイページ", customers_my_page_path, class: "btn custom-button" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "商品一覧", items_path, class: "btn custom-button" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "カート", cart_items_path, class: "btn custom-button" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "btn custom-button" %>
+          </li>
+  
+        <% else %>
+          <!--ゲスト-->
+          <li class="nav-item">
+            <%= link_to "About", _path, class: "btn custom-button" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "商品一覧", items_path, class: "btn custom-button" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "カート", cart_items_path, class: "btn custom-button" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "ログイン", new_customer_session_path, class: "btn custom-button" %>
+          </li>
+        <% end %>
+      </ul>
     </div>
-
-    <ul class="navbar-nav">
-      <% if admin_signed_in? %>
-        <!--メッセージ-->
-        <li class="nav-item">
-          <span>管理者さん、ようこそ！</span>
-        </li>
-        <!--管理者-->
-        <li class="nav-item">
-          <%= link_to "商品一覧", admin_items_path, class: "btn custom-button" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "会員一覧", admin_customers_path, class: "btn custom-button" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "注文履歴一覧", admin_root_path, class: "btn custom-button" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "ジャンル一覧", admin_genres_path, class: "btn custom-button" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn custom-button" %>
-        </li>
-
-      <% elsif customer_signed_in? %>
-        <!--メッセージ-->
-        <li class="nav-item">
-          <span><%= current_customer.last_name %> <%= current_customer.first_name %>さん、ようこそ！</span>
-        </li>
-        <!--会員-->
-        <li class="nav-item">
-          <%= link_to "マイページ", customers_my_page_path, class: "btn custom-button" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "商品一覧", items_path, class: "btn custom-button" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "カート", cart_items_path, class: "btn custom-button" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "btn custom-button" %>
-        </li>
-
-      <% else %>
-        <!--ゲスト-->
-        <li class="nav-item">
-          <span>ゲストさん、ようこそ！</span>
-        </li>
-        <li class="nav-item">
-          <%= link_to "About", root_path, class: "btn custom-button" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "商品一覧", items_path, class: "btn custom-button" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "カート", cart_items_path, class: "btn custom-button" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "ログイン", new_customer_session_path, class: "btn custom-button" %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-</nav>
-
-
-<!--検索機能-->
-<div class="container mt-4">
-  <%= form_with url: items_path, method: :get, local: true do |f| %>
-    <div class="row">
-      <div class="col d-flex justify-content-end">
-        <div class="input-group w-auto">
-          <%= f.text_field :q, class: "form-control", placeholder: "商品名で検索", aria_label: "Recipient's username", aria_describedby: "button-addon2" %>
-          <div class="input-group-append">
-            <%= button_tag(type: "submit", class: "btn btn-outline-secondary", id: "button-addon2") do %>
-              <i class="fas fa-search"></i>
-            <% end %>
+  </nav>
+  
+  
+  <!--検索機能-->
+  <div class="container mt-4">
+    <%= form_with url: items_path, method: :get, local: true do |f| %>
+      <div class="row">
+        <div class="col d-flex justify-content-end">
+          <div class="input-group w-auto">
+            <%= f.text_field :q, class: "form-control", placeholder: "商品名で検索", aria_label: "Recipient's username", aria_describedby: "button-addon2" %>
+            <div class="input-group-append">
+              <%= button_tag(type: "submit", class: "btn btn-outline-secondary", id: "button-addon2") do %>
+                <i class="fas fa-search"></i>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  <% end %>
-</div>
-  </header>
-
-  <%= yield %>
-  <div class="footer">
-    <div class="footer-top"></div>
-    <div class="footer-bottom"></div>
+    <% end %>
   </div>
-</body>
-</html>
+    </header>
+  
+    <%= yield %>
+    <div class="footer">
+      <div class="footer-top"></div>
+      <div class="footer-bottom"></div>
+    </div>
+  </body>
+  </html>
