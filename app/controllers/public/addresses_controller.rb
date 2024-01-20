@@ -1,6 +1,6 @@
 class Public::AddressesController < ApplicationController
   # アクセス権限
-  #before_action :authenticate_customer!
+  before_action :authenticate_customer!
 
   def index
     @address = Address.new
@@ -9,7 +9,7 @@ class Public::AddressesController < ApplicationController
 
   def create
     address = Address.new(address_params)
-    address.customer_id = current_user.id
+    address.customer_id = current_customer.id
     if address.save
       redirect_to addresses_path
     else
