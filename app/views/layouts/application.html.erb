@@ -58,7 +58,6 @@
           <%= link_to root_path do %>
             <%= image_tag("logo.png", alt: "ながのCAKE ロゴ", class: "logo-img") %> <!-- ロゴ画像を追加 -->
           <% end %>
-          <!--メッセージ-->
           <% if admin_signed_in? %>
             <span class="mx-2">管理者さん、ようこそ！</span>
           <% elsif customer_signed_in? %>
@@ -69,7 +68,6 @@
         </div>
       <ul class="navbar-nav">
         <% if admin_signed_in? %>
-          <!--管理者-->
           <li class="nav-item">
             <%= link_to "商品一覧", admin_items_path, class: "btn custom-button" %>
           </li>
@@ -85,9 +83,7 @@
           <li class="nav-item">
             <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn custom-button" %>
           </li>
-
         <% elsif customer_signed_in? %>
-          <!--会員-->
           <li class="nav-item">
             <%= link_to "マイページ", customers_my_page_path, class: "btn custom-button" %>
           </li>
@@ -100,9 +96,7 @@
           <li class="nav-item">
             <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "btn custom-button" %>
           </li>
-
         <% else %>
-          <!--ゲスト-->
           <li class="nav-item">
             <%= link_to "About", about_path, class: "btn custom-button" %>
           </li>
@@ -119,9 +113,6 @@
       </ul>
     </div>
   </nav>
-
-
-  検索機能
   <div class="container mt-4">
   <%= form_with url: items_path, method: :get, local: true do |f| %>
     <div class="row">
