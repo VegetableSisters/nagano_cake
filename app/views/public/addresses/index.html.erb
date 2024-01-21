@@ -1,7 +1,15 @@
 <div class="container mt-4">
   <div class="row">
     <div class="col">
-      <strong class="mr-2">配送先登録/一覧</strong>
+      <div><strong class="mr-2">配送先登録/一覧</strong></div>
+      <% if @address.errors.any? %>
+        <%= @address.errors.count %>件のエラーが発生しました
+        <ul>
+          <% @address.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
     </div>
   </div>
 

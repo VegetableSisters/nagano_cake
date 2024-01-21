@@ -7,6 +7,13 @@ class Item < ApplicationRecord
   # ActiveStorage宣言
   has_one_attached :image
 
+  # バリデーション
+  validates :name, presence: true
+  validates :introduction, presence: true
+  validates :genre_id, presence: true
+  validates :price, presence: true
+  validates :is_active, presence: true
+
   def get_image
     unless image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
@@ -18,7 +25,7 @@ class Item < ApplicationRecord
   def add_tax_price
     (self.price * 1.10).round
   end
-  
+
  # 検索機能
   def self.ransackable_associations(auth_object = nil)
     []

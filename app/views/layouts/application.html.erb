@@ -32,17 +32,17 @@
       align-items: center;
     }
     .logo-img {
-      height: 160px; 
+      height: 160px;
     }
     .navbar-nav .nav-item {
       margin-left: 10px;
     }
     .custom-button {
       background-color: #91816e;
-      border-color: #91816e; 
+      border-color: #91816e;
       color: #fff;
     }
-    
+
     .custom-button:hover {
       background-color: #6E574B;
       border-color: #6E574B;
@@ -85,7 +85,7 @@
           <li class="nav-item">
             <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn custom-button" %>
           </li>
-  
+
         <% elsif customer_signed_in? %>
           <!--会員-->
           <li class="nav-item">
@@ -100,7 +100,7 @@
           <li class="nav-item">
             <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "btn custom-button" %>
           </li>
-  
+
         <% else %>
           <!--ゲスト-->
           <li class="nav-item">
@@ -119,8 +119,8 @@
       </ul>
     </div>
   </nav>
-  
-  
+
+
   <!--検索機能-->
   <div class="container mt-4">
   <%= form_with url: items_path, method: :get, local: true do |f| %>
@@ -138,7 +138,6 @@
     </div>
   <% end %>
 </div>
-
 </header>
   <%= yield %>
     <div class="footer">
