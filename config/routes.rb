@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-
-  get 'search/suggest', to: 'search#suggest'
-  
   namespace :admin do
     root to: "homes#top"
 
@@ -17,6 +14,7 @@ Rails.application.routes.draw do
 
     root to: "homes#top"
     get "about" => "homes#about"
+    get 'search/suggest', to: 'search#suggest'
 
     # 会員
     get "customers/my_page" => "customers#show"
@@ -36,10 +34,10 @@ Rails.application.routes.draw do
     end
 
     # 注文
+    get "orders/thanks" => "orders#thanks"
     resources :orders, only: [:new, :create, :index, :show]
     post "orders/confirm" => "orders#confirm"
-    get "orders/thanks" => "orders#thanks"
-
+    
     # 住所
     resources :addresses, only: [:index, :create, :edit, :update, :destroy]
 

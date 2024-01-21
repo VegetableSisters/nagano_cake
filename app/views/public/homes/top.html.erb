@@ -1,9 +1,6 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-
 <div class="container py-5">
   <div class="row mx-auto">
-    <div class="col-lg-3 order-lg-1 order-2 mb-4">
+     <div class="col-lg-3 order-lg-1 order-2 mb-4">
       <div class="p-3 border rounded">
         <h5 class="mb-3">ジャンル</h5>
         <ul class="list-group list-group-flush">
@@ -27,10 +24,9 @@
       </div>
       <div class="m-4 p-3">
         <h2>新着商品</h2>
-        <div class="swiper-container">
-        <div class="swiper-wrapper">
+        <div class="row">
           <% @items.each do |item| %>
-            <div class="swiper-slide">
+            <div class="col-md-3 col-sm-6 mb-4">
               <div class="card h-100">
                 <div class="card-body text-center">
                   <%= link_to item_path(item) do %>
@@ -49,10 +45,6 @@
             </div>
           <% end %>
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-      </div>
         <div class="text-right mt-3">
           <%= link_to "全ての商品を見る", items_path, class: "btn btn-primary" %>
         </div>
@@ -60,6 +52,3 @@
     </div>
   </div>
 </div>
-<!--スワイパー-->
-<%= javascript_pack_tag 'swiper' %>
-
