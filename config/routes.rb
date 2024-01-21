@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'search/suggest', to: 'search#suggest'
+  
   namespace :admin do
     root to: "homes#top"
 

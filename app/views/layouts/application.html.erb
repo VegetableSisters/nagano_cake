@@ -124,24 +124,24 @@
   
   <!--検索機能-->
   <div class="container mt-4">
-    <%= form_with url: items_path, method: :get, local: true do |f| %>
-      <div class="row">
-        <div class="col d-flex justify-content-end">
-          <div class="input-group w-auto">
-            <%= f.text_field :q, class: "form-control", placeholder: "商品名で検索", aria_label: "Recipient's username", aria_describedby: "button-addon2" %>
-            <div class="input-group-append">
-              <%= button_tag(type: "submit", class: "btn btn-outline-secondary", id: "button-addon2") do %>
-                <i class="fas fa-search"></i>
-              <% end %>
-            </div>
+  <%= form_with url: items_path, method: :get, local: true do |f| %>
+    <div class="row">
+      <div class="col d-flex justify-content-end">
+        <div class="input-group w-auto">
+          <%= f.text_field :q, class: "form-control", placeholder: "商品名で検索", aria_label: "Recipient's username", aria_describedby: "button-addon2", id: "search-input" %>
+          <div class="input-group-append">
+            <%= button_tag(type: "submit", class: "btn btn-outline-secondary", id: "button-addon2") do %>
+              <i class="fas fa-search"></i>
+            <% end %>
           </div>
         </div>
       </div>
-    <% end %>
-  </div>
-    </header>
-  
-    <%= yield %>
+    </div>
+  <% end %>
+</div>
+
+</header>
+  <%= yield %>
     <div class="footer">
       <div class="footer-top"></div>
       <div class="footer-bottom"></div>
