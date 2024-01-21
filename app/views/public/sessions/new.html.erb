@@ -1,25 +1,32 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-6 offset-md-3">
-      <h2>ログイン</h2>
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class="form-group">
-          <%= f.label :メールアドレス %>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
-        </div>
+      <div class="card">
+        <div class="card-body">
+          <h2 class="text-center mb-4">ログイン</h2>
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="form-group">
+              <%= f.label :メールアドレス, class: 'form-label' %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+            </div>
 
-        <div class="form-group">
-          <%= f.label :パスワード %>
-          <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
-        </div>
+            <div class="form-group">
+              <%= f.label :パスワード, class: 'form-label' %>
+              <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+            </div>
 
-        <div class="form-group">
-          <%= f.submit "ログイン", class: "btn btn-primary btn-block mb-3" %>
-        </div>
-      <% end %>
+            <div class="form-group mt-4">
+              <%= f.submit "ログイン", class: "btn btn-primary btn-block" %>
+            </div>
+          <% end %>
 
-      <p class="text-center">会員登録がお済みではない方</p>
-      <%= render "public/shared/links" %>から新規登録を行ってください
+          <p class="text-center mt-3">会員登録がお済みではない方は</p>
+          <div class="text-center">
+            <%= render "public/shared/links" %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
