@@ -1,118 +1,65 @@
 class Public::OrdersController < ApplicationController
   # アクセス権限
   before_action :authenticate_customer!
-  
+
   def new
     @order = Order.new
   end
 
   def confirm
+    @cart_items = current_customer.cart_items
     @order = Order.new(order_params)
-    if params[:order][:address_id].present?
-    @address = Address.find(params[:order][:address_id])
-    @order.postal_code = @address.postal_code
-    @order.address = @address.address
-    @order.name = @address.name
-    else
-      # エラーハンドリングのために適切な処理を追加する
-      # 例えば、リダイレクトやエラーメッセージの表示など
-      flash[:error] = "適切なアドレスが指定されていません。"
-      render 'public/orders/new'
-      return
-    end
-    
-    @order.postal_code = @address.postal_code
-    @order.address = @address.address
-    @order.name = @address.name
-    
-    @shipping_cost = 800
-    @selected_payment_method = params[:order][:payment_method]
-    @cart_items = CartItem.where(customer_id: current_customer.id)
-  
-    # 商品合計額の計算
-    ary = []
-    @cart_items.each do |cart_item|
-      ary << cart_item.item.price * cart_item.quantity
-    end
-    @cart_items_price = ary.sum
-  
-    @total_price = @shipping_cost + @cart_items_price
-    @address_type = params[:order][:address_type]
-    
-    
-    case @address_type
+    @order.customer_id = current_customer.id
+
+    # 注文情報の計算
+    @order.shipping_cost = 800
+    @cart_items_price = CartItem.cart_items_total_price(@cart_items)
+    @order.total_payment = @order.shipping_cost + @cart_items_price
+
+    case params[:order][:address_type]
     when "customer_address"
-      @selected_address = current_customer.post_code + " " + current_customer.address + " " + current_customer.last_name + current_customer.last_name
+      @order.postal_code = current_customer.postal_code
+      @order.address = current_customer.address
+      @order.name = current_customer.last_name + current_customer.first_name
     when "registered_address"
-      unless params[:order][:address_id] == ""
-        selected = Address.find(params[:order][:address_id])
-        @selected_address = selected.postal_code + " " + selected.address + " " + selected.name
-      else
-        render :new
-      end
+      @address = Address.find(params[:order][:registered_address_id])
+      @selected_address = @address.address_display
+      @address = Address.find(params[:order][:registered_address_id])
+      @order.postal_code = @address.postal_code
+      @order.address = @address.address
+      @order.name = @address.name
     when "new_address"
-      unless params[:order][:new_postal_code] == "" && params[:order][:new_address] == "" && params[:order][:new_name] == ""
-        @selected_address = params[:order][:new_postal_code] + " " + params[:order][:new_address] + " " + params[:order][:new_name]
-      else
-        render :new
-      end
+      @selected_address = "#{params[:order][:new_postal_code]} #{params[:order][:new_address]} #{params[:order][:new_name]}"
+       @order.postal_code = params[:order][:new_postal_code]
+      @order.address = params[:order][:new_address]
+      @order.name = params[:order][:new_name]
     end
+    
+
   end
 
   def thanks
-    redirect_to thanks_orders_path
+    
   end
 
   def create
-    @order = Order.new
-      @order.customer_id = current_customer.id
-      @order.shipping_cost = 800
-      @cart_items = CartItem.where(customer_id: current_customer.id)
-      ary = []
-      @cart_items.each do |cart_item|
-        ary << cart_item.item.price*cart_item.amount
-      end
-      @cart_items_price = ary.sum
-      @order.total_payment = @order.shipping_cost + @cart_items_price
-      @order.payment_method = params[:order][:payment_method]
-      if @order.payment_method == "credit_card"
-        @order.status = 1
-      else
-        @order.status = 0
-      end
-      
-      address_type = params[:order][:address_type]
-      case address_type
-      when "customer_address"
-        @order.postal_code = current_customer.postal_code
-        @order.address = current_customer.address
-        @order.name = current_customer.last_name + current_customer.first_name
-      when "registered_address"
-        @order.registered_address = Address.find(params[:order][:registered_address_id])
-  @order.postal_code = @order.registered_address.postal_code
-  @order.address = @order.registered_address.address
-  @order.name = @order.registered_address.name
-      when "new_address"
-        @order.postal_code = params[:order][:new_postal_code]
-        @order.address = params[:order][:new_address]
-        @order.name = params[:order][:new_name]
-      end
-      
-      if @order.save
-        if @order.status == 0
-          @cart_items.each do |cart_item|
-            OrderDetail.create!(order_id: @order.id, item_id: cart_item.item.id, price: cart_item.item.price, quantity: cart_item.quantity, making_status: 0)
-          end
-        else
-          @cart_items.each do |cart_item|
-            OrderDetail.create!(order_id: @order.id, item_id: cart_item.item.id, price: cart_item.item.price, quantity: cart_item.quantity, making_status: 1)
-          end
-        end
-        @cart_items.destroy_all
-        redirect_to complete_orders_path
-      else
-        render :items
-      end
+  @order = Order.new(order_params)
+    @order.customer_id = current_customer.id
+    @order.save
+
+    current_customer.cart_items.each do |cart_item|
+      @order_detail = OrderDetail.new
+      @order_detail.order_id = @order.id
+      @order_detail.item_id = cart_item.item_id
+      @order_detail.amount = cart_item.amount
+      @order_detail.price = cart_item.item.add_tax_price
+      @order_detail.save
+    end
+    current_customer.cart_items.destroy_all
+    redirect_to orders_thanks_path
+  end
+  
+  def show
   end
 
   def index
@@ -120,20 +67,14 @@ class Public::OrdersController < ApplicationController
     @cart_items = CartItem.where(customer_id: current_customer.id)
   end
 
-  def show
-    if params[:id] == "confirm"
-    flash[:error] = "無効な注文IDです。"
-    redirect_to orders_path
-  else
-    @order = Order.find(params[:id])
-  end
-    
-  end
   
+
   private
+
+
   def order_params
-    params.require(:order).permit(:payment_method, :address_type, :new_postal_code, :new_address, :new_name)
+    params.require(:order).permit(:postal_code, :address, :name, :shipping_cost, :total_payment, :payment_method)
   end
-  
-  
+
+
 end
