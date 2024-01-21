@@ -1,14 +1,22 @@
 <div class="container mt-4">
   <div class="row">
-    <div class="col text-center">
-      <strong class="mr-2">ジャンル一覧</strong>
+    <div class="col">
+      <div><strong class="mr-2">ジャンル一覧</strong></div>
+      <% if @genre.errors.any? %>
+        <%= @genre.errors.count %>件のエラーが発生しました
+        <ul>
+          <% @genre.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
     </div>
   </div>
 
 
   <div class="row my-4">
-    <div class="col-lg-6 mx-auto">
-      <%= form_with model: @genre, url: '/admin/genres', method: :post, class: 'form-inline justify-content-center' do |f| %>
+    <div class="col-lg-6">
+      <%= form_with model: @genre, url: '/admin/genres', method: :post, class: 'form-inline' do |f| %>
         <div class="form-group mx-sm-3 mb-2">
           <%= f.label :name, 'ジャンル名', class: 'sr-only' %>
           <%= f.text_field :name, class: 'form-control', placeholder: 'ジャンル名' %>

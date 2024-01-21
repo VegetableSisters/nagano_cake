@@ -3,7 +3,8 @@ class Genre < ApplicationRecord
   validates :name, presence: true
   # アソシエーション
   has_many :items
-
+  #バリデーション
+  validates :name, presence: true
   
    # 検索機能に検索対象のカラムを追加
   def self.ransackable_attributes(auth_object = nil)
