@@ -3,16 +3,11 @@
 
 @import "~bootstrap/scss/bootstrap";
 
-.custom-button {
-  background-color: #91816e;
-  border-color: #91816e; 
-  color: #fff;
+.swiper-container {
+  width: 100%; 
+  max-width: 100%; 
+  overflow: hidden; 
 }
 
-.custom-button:hover {
-  background-color: #6E574B;
-  border-color: #6E574B;
-  color: #fff;
-}
 
 
