@@ -53,17 +53,17 @@
         </tr>
       </table>
       <div class="row justify-content-center">
-    <%= form_with model: @order, url: orders_path(@order.id), method: :post do |f| %>
-      <%= f.hidden_field :customer_id %>
-      <%= f.hidden_field :payment_method %>
-      <%= f.hidden_field :total_payment %>
-      <%= f.hidden_field :shipping_cost %>
-      <%= f.hidden_field :postal_code %>
-      <%= f.hidden_field :address %>
-      <%= f.hidden_field :name %>
-      <%= f.hidden_field :status %>
-      <%= f.submit "注文を確定する", class: "btn btn-success" %>
-    <% end %>
+      <%= form_with model: @order, url: orders_path(@order.id), method: :post do |f| %>
+        <%= f.hidden_field :customer_id %>
+        <%= f.hidden_field :payment_method %>
+        <%= f.hidden_field :total_payment %>
+        <%= f.hidden_field :shipping_cost %>
+        <%= f.hidden_field :postal_code %>
+        <%= f.hidden_field :address %>
+        <%= f.hidden_field :name %>
+        <%= f.hidden_field :status %>
+        <%= f.submit "注文を確定する", class: "btn btn-success" %>
+      <% end %>
   </div>
   </div>
 </div>

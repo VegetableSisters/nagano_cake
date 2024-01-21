@@ -35,7 +35,7 @@ class Public::OrdersController < ApplicationController
       @order.name = params[:order][:new_name]
     end
     
-
+    
   end
 
   def thanks
@@ -55,11 +55,13 @@ class Public::OrdersController < ApplicationController
       @order_detail.price = cart_item.item.add_tax_price
       @order_detail.save
     end
+    
     current_customer.cart_items.destroy_all
     redirect_to orders_thanks_path
   end
   
   def show
+    
   end
 
   def index
