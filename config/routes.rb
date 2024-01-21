@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'search/suggest', to: 'search#suggest'
+  
   namespace :admin do
     root to: "homes#top"
 
@@ -24,7 +26,9 @@ Rails.application.routes.draw do
     patch "customers/withdraw" => "customers#withdraw"
 
     # 商品
-    resources :items, only: [:index, :show]
+    resources :items, only: [:index, :show] do
+      get 'genre/:id', to: 'items#genre', as: 'genre_specific', on: :collection
+    end
 
     # カート
     resources :cart_items, only: [:index, :update, :destroy, :create] do
