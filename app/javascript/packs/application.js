@@ -14,6 +14,7 @@ import "bootstrap";
 
 import "../stylesheets/application";
 import './search_suggest'
+import './swiper.js';
 
 
 Rails.start()
