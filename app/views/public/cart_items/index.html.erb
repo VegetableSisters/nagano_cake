@@ -4,9 +4,8 @@
       <h2 class="mt-4 mb-4">ショッピングカート</h2>
     </div>
   </div>
-
   <table class="table table-hover">
-    <thead>
+    <thead class="thead-light">
       <tr>
         <th>商品名</th>
         <th>単価</th>
@@ -17,7 +16,10 @@
     </thead>
     <tbody>
       <% if @cart_items.present? %>
+        <% total_price = 0 %>
         <% @cart_items.each do |cart_item| %>
+          <% subtotal = cart_item.amount * cart_item.item.add_tax_price %>
+          <% total_price += subtotal %>
           <tr>
             <td>
               <%= image_tag cart_item.item.image, size: "50x50" if cart_item.item.image.attached? %>
@@ -30,7 +32,7 @@
                 <%= f.submit "変更", class: "btn btn-success" %>
               <% end %>
             </td>
-            <td>¥<%= (cart_item.amount * cart_item.item.add_tax_price).to_s(:delimited) %></td>
+            <td>¥<%= subtotal.to_s(:delimited) %></td>
             <td>
               <%= link_to "削除する", cart_item_path(cart_item), method: :delete, class: "btn btn-danger", data: { confirm: "本当に削除しますか？" } %>
             </td>
@@ -43,9 +45,18 @@
       <% end %>
     </tbody>
   </table>
-
-<h1>修正：ここに合計金額がほしい</h1>
-
+  <div class="row">
+    <div class="col-md-6 offset-md-6">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th>合計金額</th>
+            <td>¥<%= total_price.to_s(:delimited) %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
   <div class="text-center mt-4">
     <div class="btn-toolbar" role="toolbar">
       <% if @cart_items.present? %>
