@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   namespace :admin do
     root to: "homes#top"
     resources :orders_details, only: [:update]
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
     resources :homes, only: [:top]
   end
 
+  
   scope module: 'public' do
     root to: "homes#top"
     get "about" => "homes#about"
@@ -23,9 +25,12 @@ Rails.application.routes.draw do
     resources :cart_items, only: [:index, :update, :destroy, :create] do
       delete :destroy_all, on: :collection
     end
+
+
     get "orders/thanks" => "orders#thanks"
     resources :orders, only: [:new, :create, :index, :show]
     post "orders/confirm" => "orders#confirm"
+
     resources :addresses, only: [:index, :create, :edit, :update, :destroy]
   end
 
@@ -36,5 +41,16 @@ Rails.application.routes.draw do
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
   }
+
+  
+  namespace :admin do
+  resources :orders, only: [:show, :update]
+  resources :order_details 
+  # 他に必要なルートがあれば追加する
+end
+
+
+
+
   devise_for :users
 end
