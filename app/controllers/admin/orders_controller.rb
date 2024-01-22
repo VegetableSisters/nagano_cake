@@ -21,7 +21,7 @@ class Admin::OrdersController < ApplicationController
   private
 
   def order_detail_params
-    params.require(:order_detail).permit(:production_status)
+    params.require(:order).permit(:production_status)  # production_status に修正
   end
   def order_params
   params.require(:order).permit(:name, :total_payment, :payment_method, :postal_code, :address, :status)
