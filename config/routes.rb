@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     resources :orders_details, only: [:update]
     resources :orders, only: [:show, :update]
     resources :customers, only: [:index, :show, :edit, :update]
-    resources :genres, only: [:index, :create, :edit, :update]
+    resources :genres, only: [:index, :create, :edit, :update, :destroy]
     resources :items, only: [:index, :new, :create, :show, :edit, :update]
     resources :homes, only: [:top]
   end
