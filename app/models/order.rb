@@ -14,6 +14,17 @@ class Order < ApplicationRecord
     credit_card: 0,
     transfer: 1
   }
+  
+  enum status: {
+    payment_pending: "入金待ち",
+    payment_confirmed: "入金確認",
+    in_production: "製作中",
+    preparing_for_shipping: "発送準備中",
+    shipped: "発送済み"
+  }
+
+  has_many :order_details, dependent: :destroy
+  
   def y_to_d
     created_at.to_date.strftime("%Y/%m/%d")
   end

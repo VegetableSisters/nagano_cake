@@ -16,20 +16,19 @@
 
     <div>
     <h3><strong>お届け先</strong></h3>
-    <%= f.radio_button :address_type, "customer_address", checked: true %>
-    <%= f.label :address_type, "ご自身の住所" %>
+    <%= f.radio_button :address_type, "customer_address", checked: true, id: "customer_address_radio" %>
+    <%= f.label :address_type, "ご自身の住所", for: "customer_address_radio" %>
     〒<%= (current_customer&.postal_code || "") + "　" + (current_customer&.address || "") + "　" + (current_customer&.last_name || "") + (current_customer&.first_name || "") %>
     </div>
     <br>
-
-    <%= f.radio_button :address_type, [:registered_address] %>
-    <%= f.label :address_type, "登録済住所から選択" %>
+    
+    <%= f.radio_button :address_type, [:registered_address], id: "registered_address_radio" %>
+    <%= f.label :address_type, "登録済住所から選択", for: "registered_address_radio" %>
     <%= f.select :registered_address_id, current_customer.addresses.all.map { |m| [[m.postal_code, m.address, m.name].join(" "), m.id] } ,include_blank: "登録してある配送先住所から選択" %>
     <br>
-
-
-    <%= f.radio_button :address_type, "new_address" %>
-    <%= f.label :address_type, "新しいお届け先" %>
+    
+    <%= f.radio_button :address_type, "new_address", id: "new_address_radio" %>
+    <%= f.label :address_type, "新しいお届け先", for: "new_address_radio" %>
     <table>
       <tr>
         <td>郵便番号(ハイフンなし)</td>
