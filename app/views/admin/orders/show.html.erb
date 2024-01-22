@@ -1,29 +1,38 @@
 <div class="container">
   <h3>注文履歴詳細</h3>
   <div class="row">
-    <div class="col-10">
+    <div class="col-12">
       <table class="table">
+        <thead>
           <tr>
-            <th>購入者</th>
-            <th>注文日</th>
-            <th>配送先</th>
-            <th>支払方法</th>
-            <th>注文ステータス</th>
+            <td>購入者</td>
+            <td>注文日</td>
+            <td>配送先</td>
+            <td>支払方法</td>
+            <td>注文ステータス</td>
           </tr>
+
+        </thead>
+        <tbody>
+
+          <tr>
             <td><%= link_to @order.name, admin_customers_path %></td>
             <td><%= @order.created_at.strftime("%Y/%m/%d") %></td>
-            <td><%= (@order.postal_code_and_address_and_name) %></td>
+            <td><%= @order.postal_code_and_address_and_name %></td>
             <td><%= @order.payment_method_i18n %></td>
             <td>
               <%= form_with model: @order, url: admin_order_path(@order) do |f| %>
-                <%= f.submit "更新", class: "btn btn-success" %>
+                <%= f.submit "更新", class: "btn btn-success btn-sm" %>
               <% end %>
             </td>
-          
+          </tr>
+
+        </tbody>
+
       </table>
     </div>
 
-    <div class="col-9">
+    <div class="col-12">
       <table class="table">
         <thead>
           <tr class="bg-light">
@@ -36,11 +45,12 @@
         </thead>
         <tbody>
           <% @order_details.each do |order_detail| %>
+
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><%= order_detail.item.name %></td>
+                <td><%= order_detail.item.price %></td>
+                <td><%= order_detail.amount %></td>
+                <td><%= order_detail.amount * order_detail.item.price %></td>
             <td>
               <%= form_with model: order_detail, url: admin_order_detail_path(order_detail) do |f| %>
                 
@@ -48,12 +58,14 @@
               <% end %>
             </td>
           </tr>
+
           <% end %>
         </tbody>
-      <table>
+      </table>
     </div>
 
-    <div class"col-4">
+
+    <div class="col-4">
       <table>
           <tr>
             <th>商品合計</th>
@@ -62,11 +74,13 @@
           </tr>
 
           <tr>
-            <td>円</td>
-            <td><円</td>
-            <td>円</td>
+            <td><%= @order.total_payment %>円</td>
+            <td><%= @order.shipping_cost %>円</td>
+            <td><%= @order.total_payment + @order.shipping_cost %>円</td>
           </tr>
+
       </table>
+      
     </div>
   </div>
 </div>

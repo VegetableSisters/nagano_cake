@@ -1,5 +1,4 @@
 class Public::AddressesController < ApplicationController
-  # アクセス権限
   before_action :authenticate_customer!
 
   def index
@@ -16,7 +15,6 @@ class Public::AddressesController < ApplicationController
     else
       render :index
     end
-
   end
 
   def edit
@@ -36,9 +34,9 @@ class Public::AddressesController < ApplicationController
   end
 
   private
+
   def address_params
     params.require(:address).permit(:postal_code, :address, :name, :customer_id)
   end
-
 end
 
