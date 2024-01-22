@@ -17,9 +17,9 @@
           <td><%= order.address %></td>
           <td>
             <ul class="list-unstyled">
-              
-                <li></li>
-              
+              <% order.order_details.each do |order_detail| %>
+                <li><%= order_detail.item.name %></li>
+              <% end %>
             </ul>
           </td>
           <td><%= order.total_payment %>円</td>
@@ -28,6 +28,11 @@
         </tr>
         <% end %>
       </table>
+      <div class="row">
+        <div class="col">
+          <%= link_to '注文一覧に戻る', customers_my_page_path, class: 'btn btn-secondary' %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

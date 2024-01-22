@@ -1,8 +1,11 @@
 class Order < ApplicationRecord
   has_many :order_details
+  
 
   # アソシエーション
   # 親である注文が削除されると、子の注文詳細も削除される
+  
+  
   belongs_to :registered_address, class_name: 'Address', foreign_key: 'registered_address_id', optional: true
   attr_accessor :new_postal_code, :new_address, :new_name, :registered_address_id
 
@@ -16,6 +19,9 @@ class Order < ApplicationRecord
     credit_card: 0,
     transfer: 1
   }
+  def y_to_d
+    created_at.to_date.strftime("%Y/%m/%d")
+  end
 
   def self.payment_methods_i18n
     {

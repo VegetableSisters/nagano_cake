@@ -52,6 +52,11 @@
           <td><%= @order.postal_code + @order.address + @order.name %></td>
         </tr>
       </table>
+      <div class="row">
+        <div class="col">
+          <%= link_to '入力画面に戻る', new_order_path, class: 'btn btn-secondary' %>
+        </div>
+      </div>
       <div class="row justify-content-center">
       <%= form_with model: @order, url: orders_path(@order.id), method: :post do |f| %>
         <%= f.hidden_field :customer_id %>

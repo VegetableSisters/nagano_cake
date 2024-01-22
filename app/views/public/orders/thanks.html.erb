@@ -1,8 +1,13 @@
 <div class="container">
-  <div class="row">
+  <div class="row justify-content-center" style="height: 450px;">
 
-  <div class="col-md-12">
-    <h3>ご注文ありがとうございました！</h3>
+  <div class="col-md-12 align-self-center">
+    <h1>ご注文ありがとうございました！</h1>
+  </div>
+  <div class="row">
+    <div class="col">
+      <%= link_to '注文履歴', orders_path, class: 'btn btn-secondary' %>
+    </div>
   </div>
   <div class="text-center">
       <%= link_to "トップページへ戻る", root_path, class: "btn btn-primary" %>
