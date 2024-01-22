@@ -16,7 +16,7 @@ class Admin::ItemsController < ApplicationController
     @item = Item.new(item_params)
     @item.price = params[:item][:price]
     if @item.save
-      redirect_to admin_item_path(item)
+      redirect_to admin_item_path(@item)
     else
       render :new
     end

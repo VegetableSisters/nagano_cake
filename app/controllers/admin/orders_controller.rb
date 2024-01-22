@@ -5,7 +5,7 @@ class Admin::OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
     @order_status = @order.status
-    @order_details = @order.order_details # これが @order_details を設定する例です
+    @order_details = @order.order_details 
   end
 
   def update

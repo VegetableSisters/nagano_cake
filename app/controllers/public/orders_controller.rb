@@ -36,6 +36,7 @@ class Public::OrdersController < ApplicationController
     end
     
     
+    
   end
 
   def thanks
