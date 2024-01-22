@@ -1,4 +1,6 @@
 class Address < ApplicationRecord
+
+  # アソシエーション
   belongs_to :customer
 
   validates :postal_code, presence: true
