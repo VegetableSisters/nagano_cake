@@ -1,8 +1,5 @@
 class CartItem < ApplicationRecord
-
-  # アソシエーション
   belongs_to :customer
-
   belongs_to :item
   
   def self.cart_items_total_price(cart_items)

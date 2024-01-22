@@ -1,6 +1,5 @@
 class Admin::OrdersController < ApplicationController
-  # アクセス権限
-  #before_action :authenticate_admin!
+  before_action :authenticate_admin!
 
   def show
     @order = Order.find(params[:id])

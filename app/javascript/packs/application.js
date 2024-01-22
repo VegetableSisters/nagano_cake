@@ -8,13 +8,11 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
-import "jquery";
-import "popper.js";
+// import "jquery";
+// import "popper.js";
 import "bootstrap";
 
 import "../stylesheets/application";
-import './search_suggest'
-import './swiper.js';
 
 
 Rails.start()

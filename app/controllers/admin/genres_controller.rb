@@ -1,6 +1,5 @@
 class Admin::GenresController < ApplicationController
-  # アクセス権限
-  #before_action :authenticate_admin!
+  before_action :authenticate_admin!
 
   def index
     @genres = Genre.all
@@ -25,6 +24,12 @@ class Admin::GenresController < ApplicationController
     genre = Genre.find(params[:id])
     genre.update(genre_params)
     redirect_to admin_genres_path
+  end
+  
+  def destroy
+  genre = Genre.find(params[:id])
+  genre.destroy
+  redirect_to admin_genres_path
   end
 
   private
