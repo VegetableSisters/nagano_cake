@@ -13,11 +13,10 @@ class Public::CustomersController < ApplicationController
       redirect_to customers_my_page_path(current_customer)
     else
       render :customers_information_edit
-  end
+    end
   end
 
   def confirm
-    # 顧客の退会確認画面　/customers/confirm
   end
 
   def withdraw
@@ -27,9 +26,10 @@ class Public::CustomersController < ApplicationController
     flash[:notice] = "退会処理が完了しました"
     redirect_to root_path
   end
-  
+
   private
+
   def customer_params
-    params.require(:customer).permit(:email,:last_name,:first_name,:last_name_kana,:first_name_kana,:postal_code,:address,:telephone_number )
+    params.require(:customer).permit(:email, :last_name, :first_name, :last_name_kana, :first_name_kana, :postal_code, :address, :telephone_number)
   end
 end

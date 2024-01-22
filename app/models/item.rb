@@ -1,13 +1,9 @@
 class Item < ApplicationRecord
-
-  # アソシエーション
   belongs_to :genre, optional: true
-  has_many :cart_item
+  has_many :cart_items
 
-  # ActiveStorage宣言
   has_one_attached :image
 
-  # バリデーション
   validates :name, presence: true
   validates :introduction, presence: true
   validates :genre_id, presence: true
@@ -26,7 +22,6 @@ class Item < ApplicationRecord
     (self.price * 1.10).round
   end
 
- # 検索機能
   def self.ransackable_associations(auth_object = nil)
     []
   end
