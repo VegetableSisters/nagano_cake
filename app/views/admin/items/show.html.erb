@@ -25,7 +25,13 @@
       </tr>
       <tr>
         <th>ジャンル</th>
-        <td><%= @item.genre.name %></td>
+        <td>
+          <% if @item.genre.present? %>
+            <%= @item.genre.name %>
+          <% else %>
+            ジャンルを登録してください
+          <% end %>
+        </td>
       </tr>
       <tr>
         <th>税込価格（税抜き価格）</th>
