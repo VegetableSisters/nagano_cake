@@ -30,5 +30,9 @@ class Order < ApplicationRecord
       # 他の支払い方法を追加する場合はここに追加
     }
   end
+  
+  def postal_code_and_address_and_name
+    "#{postal_code} #{address} #{name}"
+  end
 
 end
