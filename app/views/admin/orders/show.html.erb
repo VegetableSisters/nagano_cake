@@ -38,10 +38,10 @@
         <tbody>
           <% @order_details.each do |order_detail| %>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><%= order_detail.item.name %></td>
+                <td><%= order_detail.item.price %></td>
+                <td><%= order_detail.amount %></td>
+                <td><%= order_detail.amount * order_detail.item.price %></td>
             <td>
               <%= form_with model: order_detail, url: admin_order_detail_path(order_detail) do |f| %>
                 
@@ -63,11 +63,12 @@
           </tr>
 
           <tr>
-            <td>円</td>
-            <td><円</td>
-            <td>円</td>
+            <td><%= @order.total_payment %>円</td>
+            <td><%= @order.shipping_cost %>円</td>
+            <td><%= @order.total_payment + @order.shipping_cost %>円</td>
           </tr>
       </table>
+      
     </div>
   </div>
 </div>
