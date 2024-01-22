@@ -45,6 +45,13 @@
   </table>
 
 <h1>修正：ここに合計金額がほしい</h1>
+<% if @cart_items.present? %>
+  <table class="table">
+    <th>合計金額</th>
+      <td>¥<%= @cart_items.sum { |cart_item| cart_item.amount * cart_item.item.add_tax_price }.to_s(:delimited) %></td>
+  </table>
+    
+  <% end %>
 
   <div class="text-center mt-4">
     <div class="btn-toolbar" role="toolbar">

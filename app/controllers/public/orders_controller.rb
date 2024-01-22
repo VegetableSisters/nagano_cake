@@ -13,8 +13,10 @@ class Public::OrdersController < ApplicationController
 
     # 注文情報の計算
     @order.shipping_cost = 800
-    @cart_items_price = CartItem.cart_items_total_price(@cart_items)
-    @order.total_payment = @order.shipping_cost + @cart_items_price
+    @cart_items_price = CartItem.cart_items_total_price(@cart_items) 
+    @order.total_payment = @order.shipping_cost + @cart_items_price 
+    
+    
 
     case params[:order][:address_type]
     when "customer_address"
@@ -34,9 +36,7 @@ class Public::OrdersController < ApplicationController
       @order.address = params[:order][:new_address]
       @order.name = params[:order][:new_name]
     end
-    
-    
-    
+
   end
 
   def thanks
@@ -72,14 +72,10 @@ class Public::OrdersController < ApplicationController
     @cart_items = CartItem.where(customer_id: current_customer.id)
   end
 
-  
-
   private
-
 
   def order_params
     params.require(:order).permit(:postal_code, :address, :name, :shipping_cost, :total_payment, :payment_method)
   end
-
 
 end

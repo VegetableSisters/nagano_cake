@@ -19,7 +19,7 @@
       </td>
       <td><%= cart_item.item.add_tax_price %></td>
       <td><%= cart_item.amount %></td>
-      <td><%= cart_item.item.price * cart_item.amount %></td>
+      <td><%= cart_item.item.add_tax_price * cart_item.amount %></td>
     </tr>
   <% end %>
 
