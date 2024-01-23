@@ -11,12 +11,17 @@ class Public::OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.customer_id = current_customer.id
 
-    # 注文情報の計算
+    #送料
     @order.shipping_cost = 800
-    @cart_items_price = CartItem.cart_items_total_price(@cart_items) 
-    @order.total_payment = @order.shipping_cost + @cart_items_price 
-    
-    
+
+    # 商品合計の計算
+    @cart_items_price = 0
+    @cart_items.each do |cart_item|
+      @cart_items_price += cart_item.item.add_tax_price * cart_item.amount
+    end
+
+    #請求額
+    @order.total_payment = @order.shipping_cost + @cart_items_price
 
     case params[:order][:address_type]
     when "customer_address"
@@ -40,7 +45,7 @@ class Public::OrdersController < ApplicationController
   end
 
   def thanks
-    
+
   end
 
   def create
@@ -56,15 +61,19 @@ class Public::OrdersController < ApplicationController
       @order_detail.price = cart_item.item.add_tax_price
       @order_detail.save
     end
-    
+
     current_customer.cart_items.destroy_all
     redirect_to orders_thanks_path
   end
-  
+
   def show
-     @order = Order.find(params[:id])
-     @order_details = @order.order_details
-     @order_items = @order.order_details.all
+    @order = Order.find(params[:id])
+    @order_details = @order.order_details
+    @order_items = @order.order_details.all
+    @cart_items_price = 0
+    @order_details.each do |order_detail|
+      @cart_items_price += order_detail.item.add_tax_price * order_detail.amount
+    end
   end
 
   def index
