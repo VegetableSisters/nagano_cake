@@ -15,16 +15,26 @@ class Order < ApplicationRecord
     transfer: 1
   }
   
-  enum status: {
-    payment_pending: "入金待ち",
-    payment_confirmed: "入金確認",
-    in_production: "製作中",
-    preparing_for_shipping: "発送準備中",
-    shipped: "発送済み"
+  enum production_status: {
+    not_started: 0,
+    waiting_for_production: 1,
+    in_production: 2,
+    production_completed: 3
   }
 
+  enum shipping_status: {
+    payment_pending: 0,
+    payment_confirmed: 1,
+    being_prepared: 2,
+    preparing_for_shipping: 3,
+    shipped: 4
+  }
+
+
+  after_initialize :set_default_status, if: :new_record?
+
   has_many :order_details, dependent: :destroy
-  
+
   def y_to_d
     created_at.to_date.strftime("%Y/%m/%d")
   end
@@ -37,10 +47,15 @@ class Order < ApplicationRecord
     }
   end
 
-  
   def postal_code_and_address_and_name
     "#{postal_code} #{address} #{name}"
   end
 
+  def set_default_status
+    self.status ||= :payment_pending
+  end
 
+  def order_status_i18n
+    I18n.t("order.order_statuses.#{order_status}")
+  end
 end

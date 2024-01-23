@@ -6,17 +6,19 @@ class Admin::OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order_status = @order.status
     @order_details = @order.order_details
-    I18n.locale = :ja
+    @orders = Order.all 
   end
 
   def update
-    @order_detail = OrderDetail.find(params[:id])
-    if @order_detail.update(order_detail_params)
-      redirect_to admin_order_path(@order_detail.order), notice: "製作ステータスが更新されました。"
-    else
-      render :show
-    end
+  @order_detail = OrderDetail.find(params[:id])
+
+  if @order_detail.update(order_detail_params)
+    puts @order_detail.inspect # 追加行
+    redirect_to admin_order_path(@order_detail.order), notice: "製作ステータスが更新されました。"
+  else
+    render :edit
   end
+end
 
   private
 
@@ -26,4 +28,5 @@ class Admin::OrdersController < ApplicationController
   def order_params
   params.require(:order).permit(:name, :total_payment, :payment_method, :postal_code, :address, :status)
   end
+  
 end

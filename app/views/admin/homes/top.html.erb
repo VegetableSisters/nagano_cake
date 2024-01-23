@@ -15,7 +15,9 @@
           <td><%= link_to order.created_at.strftime("%Y/%m/%d"), admin_order_path(order) %></td>
           <td><%= order.name %></td>
           <td><%= order.order_details.sum(&:amount) %></td>
-          <td></td>
+          <td>
+            <%= I18n.t("enums.order.status.#{order.status}") %>
+          </td>
         </tr>
       <% end %>
     </tbody>
