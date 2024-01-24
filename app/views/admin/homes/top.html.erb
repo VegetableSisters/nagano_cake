@@ -16,7 +16,11 @@
           <td><%= order.name %></td>
           <td><%= order.order_details.sum(&:amount) %></td>
           <td>
-            <%= I18n.t("enums.order.status.#{order.status}") %>
+            <% if order.order_details.present? && order.order_details.first.making_status.present? %>
+              <%= order.order_details.first.making_status_i18n %>
+            <% else %>
+              No order details or making status
+            <% end %>
           </td>
         </tr>
       <% end %>

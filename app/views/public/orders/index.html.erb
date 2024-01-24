@@ -24,13 +24,13 @@
             </ul>
           </td>
           <td><%= order.total_payment %>円</td>
-          <td>
-      <% if order.status.present? %> <!-- チェックを追加 -->
-        <%= order.status_i18n %>
-      <% else %>
-        Status not available
-      <% end %>
-    </td>
+
+          <% if order.present? %>
+            <td><%= t("enums.order.status.#{order.status}") %></td>
+          <% else %>
+            <td>未設定</td>
+          <% end %>
+
           <td><%= link_to "表示する", order_path(order.id), class: "btn btn-primary" %></td>
         </tr>
         <% end %>
