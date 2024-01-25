@@ -51,9 +51,9 @@
               <% @order_details.each do |order_detail| %>
                 <tr>
                   <td><%= order_detail.item.name %></td>
-                  <td><%= order_detail.item.price %>円</td>
+                  <td><%= order_detail.item.add_tax_price %>円</td>
                   <td><%= order_detail.amount %>個</td>
-                  <td><%= order_detail.amount * order_detail.item.price %>円</td>
+                  <td><%= order_detail.amount * order_detail.item.add_tax_price %>円</td>
                   <td>
                     <%= form_with model: order_detail, url: admin_order_detail_path(order_detail), method: :patch do |f| %>
                       <%= f.select :making_status, ["着手不可", "製作待ち", "製作中", "製作完了"] %>
@@ -70,7 +70,7 @@
           <table class="table">
             <tr>
               <th>商品合計</th>
-              <td><%= @order.total_payment %>円</td>
+              <td><%= @order.total_payment - @order.shipping_cost %>円</td>
             </tr>
             <tr>
               <th>送料</th>
@@ -79,7 +79,7 @@
             <tr>
             <tr>
               <th>請求合計</th>
-              <td><%= @order.total_payment + @order.shipping_cost %>円</td>
+              <td><%= @order.total_payment %>円</td>
             </tr>
           </table>
         </div>
