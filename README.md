@@ -42,8 +42,5 @@ $ rails s
 - 顧客　新規登録
 - 管理者　Email：admin@admin PASS：adminmin
 
-## 要件
-- 要件定義書(https://docs.google.com/document/d/e/2PACX-1vTMt9S2VG4RHmBpmQinLNYqKPF_glh_sElP4QqMXGdrYerS0nef0bo_Zd_-jtbcEdEOZbvZwH91Jo2c/pub)
-
 ## 実装者
 ナッツ、ケケ、ピーマン
