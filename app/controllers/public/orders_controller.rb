@@ -1,6 +1,6 @@
 class Public::OrdersController < ApplicationController
   before_action :authenticate_customer!
-  before_action :check_new_address, only: [:confirm]
+  before_action :check_address_input, only: [:confirm]
 
   def new
     @order = Order.new
@@ -79,15 +79,16 @@ class Public::OrdersController < ApplicationController
     @cart_items = CartItem.where(customer_id: current_customer.id)
   end
 
-  private
-
-  def order_params
-    params.require(:order).permit(:postal_code, :address, :name, :shipping_cost, :total_payment, :payment_method)
-  end
-
-  def check_new_address
-    if params[:order][:address_type] == "new_address" && (params[:order][:new_postal_code].blank? || params[:order][:new_address].blank? || params[:order][:new_name].blank?)
+  def check_address_input
+    if params[:order][:address_type] == "new_address" && 
+       (params[:order][:new_postal_code].blank? || 
+        params[:order][:new_address].blank? || 
+        params[:order][:new_name].blank?)
       flash[:alert] = "新しいお届け先の情報を入力してください"
+      redirect_to new_order_path
+    elsif params[:order][:address_type] == "registered_address" && 
+          params[:order][:registered_address_id].blank?
+      flash[:alert] = "登録済みの住所を選択してください"
       redirect_to new_order_path
     end
   end
