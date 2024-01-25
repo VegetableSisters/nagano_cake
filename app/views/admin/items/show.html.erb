@@ -35,7 +35,7 @@
       </tr>
       <tr>
         <th>税込価格（税抜き価格）</th>
-        <td>¥<%= @item.add_tax_price.to_s(:delimited) %>円 / ¥<%= @item.price %>円</td>
+        <td><%= @item.add_tax_price.to_s(:delimited) %>円 / <%= @item.price %>円</td>
       </tr>
       <tr>
         <th>販売ステータス</th>
