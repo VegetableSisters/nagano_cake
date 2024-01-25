@@ -10,18 +10,19 @@
       </tr>
     </thead>
     <tbody>
-      <% @orders.each do |order| %>
+      <% @orders.order(created_at: :desc).each do |order| %>
+
         <tr>
           <td><%= link_to order.created_at.strftime("%Y/%m/%d"), admin_order_path(order) %></td>
-          <td><%= order.name %></td>
+          <td><%= link_to order.name, admin_customer_path(order.customer) %></td>
           <td><%= order.order_details.sum(&:amount) %></td>
           <td>
-            <% if order.order_details.present? && order.order_details.first.making_status.present? %>
-              <%= order.order_details.first.making_status_i18n %>
-            <% else %>
-              No order details or making status
-            <% end %>
-          </td>
+  <% if order.status.present? %>
+    <%= order.status_i18n %>
+  <% else %>
+    No order status
+  <% end %>
+</td>
         </tr>
       <% end %>
     </tbody>

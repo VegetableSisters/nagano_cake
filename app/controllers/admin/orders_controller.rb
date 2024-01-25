@@ -25,6 +25,11 @@ class Admin::OrdersController < ApplicationController
 
 
   end
+  
+  def index
+    @user = current_user
+    @orders = @user.orders.order(created_at: :desc)
+  end
 
   private
 
