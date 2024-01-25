@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   namespace :admin do
   resources :orders, only: [:show, :update]
   resources :order_details 
-  # 他に必要なルートがあれば追加する
+  
 end
 
 
