@@ -10,14 +10,19 @@
       </tr>
     </thead>
     <tbody>
-      <% @orders.each do |order| %>
+      <% @orders.order(created_at: :desc).each do |order| %>
+
         <tr>
           <td><%= link_to order.created_at.strftime("%Y/%m/%d"), admin_order_path(order) %></td>
-          <td><%= order.name %></td>
+          <td><%= link_to order.name, admin_customer_path(order.customer) %></td>
           <td><%= order.order_details.sum(&:amount) %></td>
           <td>
-            <%= I18n.t("enums.order.status.#{order.status}") %>
-          </td>
+  <% if order.status.present? %>
+    <%= order.status_i18n %>
+  <% else %>
+    No order status
+  <% end %>
+</td>
         </tr>
       <% end %>
     </tbody>

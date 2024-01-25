@@ -1,32 +1,40 @@
-class Admin::OrdersController < ApplicationController
 
+    #注文商品に対してupdate_allを使用して、making_statusで()の中に
+    #どういう時に１５行目から~~update_all~~ if @order.status =="confirmed(yml確認）"　更新したらredirect_to
+
+class Admin::OrdersController < ApplicationController
   before_action :authenticate_admin!
 
   def show
     @order = Order.find(params[:id])
-    @order_status = @order.status
     @order_details = @order.order_details
-    @orders = Order.all 
   end
 
   def update
-  @order_detail = OrderDetail.find(params[:id])
+    @order = Order.find(params[:id])
+    @order.update(status: params[:order][:status])
+    @order_details = @order.order_details
+    #@order_details.update(making_status:"waiting_for_production")
 
-  if @order_detail.update(order_detail_params)
-    puts @order_detail.inspect # 追加行
-    redirect_to admin_order_path(@order_detail.order), notice: "製作ステータスが更新されました。"
-  else
-    render :edit
+    if params[:order][:status] == "入金確認"
+       @order_details.update_all(making_status:"製作待ち")
+    end
+
+    flash[:notice] = "更新に成功しました。"
+    redirect_to admin_order_path(@order)
+
+
   end
-end
+  
+  def index
+    @user = current_user
+    @orders = @user.orders.order(created_at: :desc)
+  end
 
   private
 
-  def order_detail_params
-    params.require(:order_detail).permit(:production_status)
-  end
   def order_params
-  params.require(:order).permit(:name, :total_payment, :payment_method, :postal_code, :address, :status)
+    params.require(:order).permit(:customer_id,:name, :poastal_code, :address)
   end
-  
+
 end
