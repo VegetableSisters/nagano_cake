@@ -1,6 +1,6 @@
 class Public::OrdersController < ApplicationController
-  # アクセス権限
   before_action :authenticate_customer!
+  before_action :check_new_address, only: [:confirm]
 
   def new
     @order = Order.new
@@ -11,7 +11,7 @@ class Public::OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.customer_id = current_customer.id
 
-    #送料
+    # 送料
     @order.shipping_cost = 800
 
     # 商品合計の計算
@@ -20,7 +20,7 @@ class Public::OrdersController < ApplicationController
       @cart_items_price += cart_item.item.add_tax_price * cart_item.amount
     end
 
-    #請求額
+    # 請求額
     @order.total_payment = @order.shipping_cost + @cart_items_price
 
     case params[:order][:address_type]
@@ -31,25 +31,23 @@ class Public::OrdersController < ApplicationController
     when "registered_address"
       @address = Address.find(params[:order][:registered_address_id])
       @selected_address = @address.address_display
-      @address = Address.find(params[:order][:registered_address_id])
       @order.postal_code = @address.postal_code
       @order.address = @address.address
       @order.name = @address.name
     when "new_address"
       @selected_address = "#{params[:order][:new_postal_code]} #{params[:order][:new_address]} #{params[:order][:new_name]}"
-       @order.postal_code = params[:order][:new_postal_code]
+      @order.postal_code = params[:order][:new_postal_code]
       @order.address = params[:order][:new_address]
       @order.name = params[:order][:new_name]
     end
-
   end
 
   def thanks
-
+    # 省略
   end
 
   def create
-  @order = Order.new(order_params)
+    @order = Order.new(order_params)
     @order.customer_id = current_customer.id
     @order.save
 
@@ -77,7 +75,6 @@ class Public::OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order.all
     @orders = current_customer.orders.all
     @cart_items = CartItem.where(customer_id: current_customer.id)
   end
@@ -88,4 +85,10 @@ class Public::OrdersController < ApplicationController
     params.require(:order).permit(:postal_code, :address, :name, :shipping_cost, :total_payment, :payment_method)
   end
 
+  def check_new_address
+    if params[:order][:address_type] == "new_address" && (params[:order][:new_postal_code].blank? || params[:order][:new_address].blank? || params[:order][:new_name].blank?)
+      flash[:alert] = "新しいお届け先の情報を入力してください"
+      redirect_to new_order_path
+    end
+  end
 end
