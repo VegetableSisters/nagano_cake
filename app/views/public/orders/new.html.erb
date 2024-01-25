@@ -1,54 +1,66 @@
 <div class="container mt-4">
   <div class="row justify-content-center">
-    <div class="col-md-8 text-center">
-      <h3>注文情報入力</h3>
-    </div>
-  </div>
-
-  <div class="row justify-content-center mt-3">
     <div class="col-md-8">
-      <%= form_with model: @order, url: orders_confirm_path, method: :post, class: "form-group" do |f| %>
-        <h4>支払方法</h4>
-        <div class="form-check">
-          <%= f.radio_button :payment_method, Order.payment_methods.key(0), checked: true, class: "form-check-input" %>
-          <%= f.label :payment_method_credit_card, Order.payment_methods_i18n[:credit_card], class: "form-check-label" %>
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>注文情報入力</h3>
         </div>
-        <div class="form-check">
-          <%= f.radio_button :payment_method, Order.payment_methods.key(1), class: "form-check-input" %>
-          <%= f.label :payment_method_transfer, Order.payment_methods_i18n[:transfer], class: "form-check-label" %>
-        </div>
+        <div class="card-body">
+          <%= form_with model: @order, url: orders_confirm_path, method: :post, class: "form-group" do |f| %>
+            <h4>支払方法</h4>
+            <div class="form-check">
+              <%= f.radio_button :payment_method, Order.payment_methods.key(0), checked: true, class: "form-check-input" %>
+              <%= f.label :payment_method_credit_card, Order.payment_methods_i18n[:credit_card], class: "form-check-label" %>
+            </div>
+            <div class="form-check">
+              <%= f.radio_button :payment_method, Order.payment_methods.key(1), class: "form-check-input" %>
+              <%= f.label :payment_method_transfer, Order.payment_methods_i18n[:transfer], class: "form-check-label" %>
+            </div>
 
-        <h4 class="mt-4">お届け先</h4>
-        <div class="form-check">
-          <%= f.radio_button :address_type, "customer_address", checked: true, id: "customer_address_radio", class: "form-check-input" %>
-          <%= f.label :address_type, "ご自身の住所", for: "customer_address_radio", class: "form-check-label" %>
-          <p>〒<%= (current_customer&.postal_code || "") + " " + (current_customer&.address || "") + " " + (current_customer&.last_name || "") + (current_customer&.first_name || "") %></p>
-        </div>
+            <h4 class="mt-4">お届け先</h4>
+            <div class="form-check">
+              <%= f.radio_button :address_type, "customer_address", checked: true, id: "customer_address_radio", class: "form-check-input" %>
+              <%= f.label :address_type, "ご自身の住所", for: "customer_address_radio", class: "form-check-label" %>
+              <table class="table mt-2">
+                <tr>
+                  <th>宛名</th>
+                  <td><%= (current_customer&.last_name || "") + " " + (current_customer&.first_name || "") %></td>
+                </tr>
+                <tr>
+                  <th>郵便番号</th>
+                  <td>〒<%= current_customer&.postal_code %></td>
+                </tr>
+                <tr>
+                  <th>住所</th>
+                  <td><%= current_customer&.address %></td>
+                </tr>
+              </table>
+            </div>
 
-        <div class="form-check">
-          <%= f.radio_button :address_type, [:registered_address], id: "registered_address_radio", class: "form-check-input" %>
-          <%= f.label :address_type, "登録済住所から選択", for: "registered_address_radio", class: "form-check-label" %>
-          <%= f.select :registered_address_id, current_customer.addresses.all.map { |m| [[m.postal_code, m.address, m.name].join(" "), m.id] }, include_blank: "登録してある配送先住所から選択", class: "form-control" %>
-        </div>
+            <div class="form-check mt-3">
+              <%= f.radio_button :address_type, [:registered_address], id: "registered_address_radio", class: "form-check-input" %>
+              <%= f.label :address_type, "登録済住所から選択", for: "registered_address_radio", class: "form-check-label" %>
+              <%= f.select :registered_address_id, current_customer.addresses.all.map { |m| [[m.postal_code, m.address, m.name].join(" "), m.id] }, include_blank: "登録してある配送先住所から選択", class: "form-control" %>
+            </div>
 
-        <div class="form-check mt-3">
-          <%= f.radio_button :address_type, "new_address", id: "new_address_radio", class: "form-check-input" %>
-          <%= f.label :address_type, "新しいお届け先", for: "new_address_radio", class: "form-check-label" %>
-          <table class="table">
-            <tr>
-              <td>郵便番号(ハイフンなし)</td>
-              <td><%= f.text_field :new_postal_code, placeholder: "例) 0000000", class: "form-control" %></td>
-            </tr>
-            <tr>
-              <td>住所</td>
-              <td><%= f.text_field :new_address, placeholder: "例) 長野県長野市大字南長野字幅下692-2", class: "form-control" %></td>
-            </tr>
-            <tr>
-              <td>宛名</td>
-              <td><%= f.text_field :new_name, placeholder: "例) 山田花子", class: "form-control" %></td>
-            </tr>
-          </table>
-        </div>
+            <div class="form-check mt-3">
+              <%= f.radio_button :address_type, "new_address", id: "new_address_radio", class: "form-check-input" %>
+              <%= f.label :address_type, "新しいお届け先", for: "new_address_radio", class: "form-check-label" %>
+              <table class="table mt-2">
+                <tr>
+                  <th>宛名</th>
+                  <td><%= f.text_field :new_name, placeholder: "例) 山田花子", class: "form-control" %></td>
+                </tr>
+                <tr>
+                  <th>郵便番号(ハイフンなし)</th>
+                  <td><%= f.text_field :new_postal_code, placeholder: "例) 0000000", class: "form-control" %></td>
+                </tr>
+                <tr>
+                  <th>住所</th>
+                  <td><%= f.text_field :new_address, placeholder: "例) 長野県長野市大字南長野字幅下692-2", class: "form-control" %></td>
+                </tr>
+              </table>
+            </div>
 
         <div class="mt-4 d-flex justify-content-between">
           <%= link_to 'カートに戻る', cart_items_path, class: 'btn btn-secondary' %>
@@ -58,4 +70,5 @@
     </div>
   </div>
 </div>
-
+</div>
+</div>
