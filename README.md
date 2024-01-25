@@ -3,12 +3,12 @@
 ## 概要
 長野県にある小さな洋菓子店「ながのCAKE」の商品を通販するためのECサイト開発。
 
-要件定義書(https://docs.google.com/document/d/e/2PACX-1vTMt9S2VG4RHmBpmQinLNYqKPF_glh_sElP4QqMXGdrYerS0nef0bo_Zd_-jtbcEdEOZbvZwH91Jo2c/pub)
-
 ## 制作背景
 元々近隣住民が顧客だったが、昨年始めたInstagramから人気となり、全国から注文が来るようになった。
 
 InstagramのDMやメールで通販の注文を受けていたが、情報管理が煩雑になってきたため、管理機能を含んだ通販サイトを開設しようと思い至った。
+
+要件定義書(https://docs.google.com/document/d/e/2PACX-1vTMt9S2VG4RHmBpmQinLNYqKPF_glh_sElP4QqMXGdrYerS0nef0bo_Zd_-jtbcEdEOZbvZwH91Jo2c/pub)
 
 ## バージョン
 ruby 3.1.2p20
