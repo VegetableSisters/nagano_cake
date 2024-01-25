@@ -60,7 +60,7 @@
               <% @addresses.each do |address| %>
                 <tr>
                   <td><%= address.name %></td>
-                  <td><%= address.postal_code %></td>
+                  <td>〒<%= address.postal_code %></td>
                   <td><%= address.address %></td>
                   <td>
                     <%= link_to '編集', edit_address_path(address), class: "btn btn-success btn-sm" %>
