@@ -43,6 +43,7 @@ class Public::OrdersController < ApplicationController
   end
 
   def thanks
+    # 省略
   end
 
   def create
@@ -63,7 +64,7 @@ class Public::OrdersController < ApplicationController
   end
 
   def show
-  @order = Order.find(params[:id])
+  @order = Order.find(params[:id])  # この行を追加
 
   @order_details = @order.order_details
   @order_items = @order.order_details.all
