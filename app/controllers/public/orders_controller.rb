@@ -49,7 +49,7 @@ class Public::OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     @order.customer_id = current_customer.id
-    @order.save
+    
 
     current_customer.cart_items.each do |cart_item|
       @order_detail = OrderDetail.new
@@ -59,20 +59,20 @@ class Public::OrdersController < ApplicationController
       @order_detail.price = cart_item.item.add_tax_price
       @order_detail.save
     end
-
     current_customer.cart_items.destroy_all
     redirect_to orders_thanks_path
   end
 
   def show
-    @order = Order.find(params[:id])
-    @order_details = @order.order_details
-    @order_items = @order.order_details.all
-    @cart_items_price = 0
-    @order_details.each do |order_detail|
-      @cart_items_price += order_detail.item.add_tax_price * order_detail.amount
-    end
+  @order = Order.find(params[:id])  # この行を追加
+
+  @order_details = @order.order_details
+  @order_items = @order.order_details.all
+  @cart_items_price = 0
+  @order_details.each do |order_detail|
+    @cart_items_price += order_detail.item.add_tax_price * order_detail.amount
   end
+end
 
   def index
     @orders = current_customer.orders.all

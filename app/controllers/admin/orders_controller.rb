@@ -14,7 +14,6 @@ class Admin::OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order.update(status: params[:order][:status])
     @order_details = @order.order_details
-    #@order_details.update(making_status:"waiting_for_production")
 
     if params[:order][:status] == "入金確認"
        @order_details.update_all(making_status:"製作待ち")
