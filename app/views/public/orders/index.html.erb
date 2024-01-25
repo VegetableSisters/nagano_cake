@@ -1,44 +1,46 @@
 <div class="container mt-4">
-  <div class="row">
+  <div class="row justify-content-center">
     <div class="col-md-12">
-      <h3>注文履歴一覧</h3>
-
-      <table class="table">
-        <tr>
-          <td>注文日</td>
-          <td>配送先</td>
-          <td>注文商品</td>
-          <td>支払い金額</td>
-          <td>ステータス</td>
-          <td>注文詳細</td>
-        </tr>
-        <% @orders.each do |order| %>
-        <tr>
-          <td><%= order.created_at.strftime('%Y/%m/%d') %></td>
-          <td><%= order.address %></td>
-          <td>
-            <ul class="list-unstyled">
-              <% order.order_details.each do |order_detail| %>
-                <li><%= order_detail.item.name %></li>
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>注文履歴一覧</h3>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>注文日</th>
+                <th>配送先</th>
+                <th>注文商品</th>
+                <th>支払金額</th>
+                <th>ステータス</th>
+                <th>注文詳細</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @orders.each do |order| %>
+              <tr>
+                <td><%= order.created_at.strftime('%Y/%m/%d') %></td>
+                <td><%= order.address %></td>
+                <td>
+                  <ul class="list-unstyled">
+                    <% order.order_details.each do |order_detail| %>
+                      <li><%= order_detail.item.name %></li>
+                    <% end %>
+                  </ul>
+                </td>
+                <td>¥<%= order.total_payment.to_s(:delimited) %>円</td>
+                <td><%= t("enums.order.status.#{order.status}") %></td>
+                <td>
+                  <%= link_to "表示", order_path(order.id), class: "btn btn-primary btn-sm" %>
+                </td>
+              </tr>
               <% end %>
-            </ul>
-          </td>
-          <td><%= order.total_payment %>円</td>
-
-          <% if order.present? %>
-            <td><%= t("enums.order.status.#{order.status}") %></td>
-          <% else %>
-            <td>未設定</td>
-          <% end %>
-
-          <td><%= link_to "表示する", order_path(order.id), class: "btn btn-primary" %></td>
-        </tr>
-        <% end %>
-
-      </table>
-      <div class="row">
-        <div class="col">
-          <%= link_to '注文一覧に戻る', customers_my_page_path, class: 'btn btn-secondary' %>
+            </tbody>
+          </table>
+          <div class="text-center mt-4">
+            <%= link_to '注文一覧に戻る', customers_my_page_path, class: 'btn btn-secondary' %>
+          </div>
         </div>
       </div>
     </div>
