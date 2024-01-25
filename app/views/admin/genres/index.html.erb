@@ -39,8 +39,8 @@
           <td><%= genre.id %></td>
           <td><%= genre.name %></td>
           <td>
-            <%= link_to '編集する', edit_admin_genre_path(genre), class: "btn btn-sm btn-success " %>
-            <%= link_to '削除する', admin_genre_path(genre), class: 'btn btn-sm btn-danger mr-2',  method: :delete, data: { confirm: '本当に削除しますか？' } %>
+            <%= link_to '編集', edit_admin_genre_path(genre), class: "btn btn-sm btn-success " %>
+            <%= link_to '削除', admin_genre_path(genre), class: 'btn btn-sm btn-danger mr-2',  method: :delete, data: { confirm: '本当に削除しますか？' } %>
           </td>
         </tr>
       <% end %>
