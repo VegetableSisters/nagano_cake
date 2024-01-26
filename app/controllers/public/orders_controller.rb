@@ -11,16 +11,13 @@ class Public::OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.customer_id = current_customer.id
 
-    # 送料
     @order.shipping_cost = 800
 
-    # 商品合計の計算
     @cart_items_price = 0
     @cart_items.each do |cart_item|
       @cart_items_price += cart_item.item.add_tax_price * cart_item.amount
     end
   
-    # 請求額
     @order.total_payment = @order.shipping_cost + @cart_items_price
 
     case params[:order][:address_type]
@@ -43,7 +40,6 @@ class Public::OrdersController < ApplicationController
   end
 
   def thanks
-    # 省略
   end
 
   def create
@@ -64,7 +60,7 @@ class Public::OrdersController < ApplicationController
   end
 
   def show
-  @order = Order.find(params[:id])  # この行を追加
+  @order = Order.find(params[:id])
 
   @order_details = @order.order_details
   @order_items = @order.order_details.all
