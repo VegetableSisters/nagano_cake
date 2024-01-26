@@ -11,13 +11,16 @@ class Public::OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.customer_id = current_customer.id
 
+    # 送料
     @order.shipping_cost = 800
-    
+
+    # 商品合計の計算
     @cart_items_price = 0
     @cart_items.each do |cart_item|
       @cart_items_price += cart_item.item.add_tax_price * cart_item.amount
     end
-
+  
+    # 請求額
     @order.total_payment = @order.shipping_cost + @cart_items_price
 
     case params[:order][:address_type]
@@ -40,43 +43,41 @@ class Public::OrdersController < ApplicationController
   end
 
   def thanks
+    # 省略
   end
 
   def create
     @order = Order.new(order_params)
     @order.customer_id = current_customer.id
+    
 
-    if @order.save
-      current_customer.cart_items.each do |cart_item|
-        @order_detail = @order.order_details.new(
-          item_id: cart_item.item_id,
-          amount: cart_item.amount,
-          price: cart_item.item.add_tax_price
-        )
-        @order_detail.save
-      end
-      current_customer.cart_items.destroy_all
-      redirect_to orders_thanks_path
-    else
-      render :new
+    current_customer.cart_items.each do |cart_item|
+      @order_detail = OrderDetail.new
+      @order_detail.order_id = @order.id
+      @order_detail.item_id = cart_item.item_id
+      @order_detail.amount = cart_item.amount
+      @order_detail.price = cart_item.item.add_tax_price
+      @order_detail.save
     end
+    current_customer.cart_items.destroy_all
+    redirect_to orders_thanks_path
   end
 
   def show
-    @order = Order.find(params[:id])
-    @order_details = @order.order_details
-    @cart_items_price = 0
-    @order_details.each do |order_detail|
-      @cart_items_price += order_detail.item.add_tax_price * order_detail.amount
-    end
+  @order = Order.find(params[:id])  # この行を追加
+
+  @order_details = @order.order_details
+  @order_items = @order.order_details.all
+  @cart_items_price = 0
+  @order_details.each do |order_detail|
+    @cart_items_price += order_detail.item.add_tax_price * order_detail.amount
+  end
   end
 
   def index
     @orders = current_customer.orders.all
     @cart_items = CartItem.where(customer_id: current_customer.id)
   end
-
-  private
 
   def order_params
     params.require(:order).permit(:postal_code, :address, :name, :shipping_cost, :total_payment, :payment_method)
