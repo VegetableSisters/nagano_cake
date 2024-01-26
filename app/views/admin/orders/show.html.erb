@@ -52,7 +52,7 @@
                 </tr>
                 <tr>
                   <th>税込価格</th>
-                  <td><%= number_to_currency(order_detail.item.price) %></td>
+                  <td><%= number_to_currency(order_detail.item.add_tax_price) %></td>
                 </tr>
                 <tr>
                   <th>数量</th>
@@ -60,7 +60,7 @@
                 </tr>
                 <tr>
                   <th>小計</th>
-                  <td><%= number_to_currency(order_detail.amount * order_detail.item.price) %></td>
+                  <td><%= number_to_currency(order_detail.amount * order_detail.item.add_tax_price) %></td>
                 </tr>
                 <tr>
                   <th>ステータス</th>
