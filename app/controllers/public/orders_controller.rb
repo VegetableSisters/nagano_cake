@@ -19,7 +19,7 @@ class Public::OrdersController < ApplicationController
     @cart_items.each do |cart_item|
       @cart_items_price += cart_item.item.add_tax_price * cart_item.amount
     end
-
+  
     # 請求額
     @order.total_payment = @order.shipping_cost + @cart_items_price
 
@@ -72,7 +72,7 @@ class Public::OrdersController < ApplicationController
   @order_details.each do |order_detail|
     @cart_items_price += order_detail.item.add_tax_price * order_detail.amount
   end
-end
+  end
 
   def index
     @orders = current_customer.orders.all

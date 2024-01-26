@@ -48,6 +48,7 @@
                 <tr>
                   <th>商品名</th>
                   <td><%= order_detail.item.name %></td>
+
                 </tr>
                 <tr>
                   <th>税込価格</th>
@@ -63,6 +64,7 @@
                 </tr>
                 <tr>
                   <th>ステータス</th>
+
                   <td>
                     <%= form_with model: order_detail, url: admin_order_detail_path(order_detail), method: :patch do |f| %>
                       <%= f.select :making_status, ["着手不可", "製作待ち", "製作中", "製作完了"] %>
@@ -70,12 +72,13 @@
                     <% end %>
                   </td>
                 </tr>
+
               </table>
             <% end %>
             <table class="table">
               <tr>
                 <th>商品合計</th>
-                <td><%= number_to_currency(@order.total_payment) %></td>
+                <td><%= number_to_currency(@order.total_payment - @order.shipping_cost) %></td>
               </tr>
               <tr>
                 <th>送料</th>
@@ -83,10 +86,11 @@
               </tr>
               <tr>
                 <th>請求金額</th>
-                <td><%= number_to_currency(@order.total_payment + @order.shipping_cost) %></td>
+                <td><%= number_to_currency(@order.total_payment) %></td>
               </tr>
             </table>
           </div>
+
 
           <div class="row">
             <div class="col text-center">
