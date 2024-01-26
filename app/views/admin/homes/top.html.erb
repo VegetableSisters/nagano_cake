@@ -1,30 +1,39 @@
 <div class="container mt-5">
-  <h1>注文履歴一覧</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>購入日時</th>
-        <th>購入者</th>
-        <th>注文個数</th>
-        <th>注文ステータス</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @orders.order(created_at: :desc).each do |order| %>
-
-        <tr>
-          <td><%= link_to order.created_at.strftime("%Y/%m/%d"), admin_order_path(order) %></td>
-          <td><%= link_to order.name, admin_customer_path(order.customer) %></td>
-          <td><%= order.order_details.sum(&:amount) %></td>
-          <td>
-  <% if order.status.present? %>
-    <%= order.status_i18n %>
-  <% else %>
-    No order status
-  <% end %>
-</td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>注文履歴一覧</h3>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>購入日時</th>
+                <th>購入者</th>
+                <th>注文個数</th>
+                <th>ステータス</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @orders.order(created_at: :desc).each do |order| %>
+                <tr>
+                  <td><%= link_to order.created_at.strftime("%Y/%m/%d"), admin_order_path(order) %></td>
+                  <td><%= link_to order.name, admin_customer_path(order.customer) %></td>
+                  <td><%= order.order_details.sum(&:amount) %>個</td>
+                  <td>
+                    <% if order.status.present? %>
+                      <%= order.status_i18n %>
+                    <% else %>
+                      No order status
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

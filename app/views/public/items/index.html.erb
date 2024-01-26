@@ -1,14 +1,18 @@
 <div class="container mt-4">
   <div class="row">
-    <div class="col-lg-3 genre-list">
-      <h5 class="mb-3">ジャンル</h5>
-      <ul class="list-group">
-        <% @genres.each do |genre| %>
-          <li class="list-group-item">
-            <%= link_to genre.name, items_path(genre_id: genre.id) %>
-          </li>
-        <% end %>
-      </ul>
+    <div class="col-lg-3">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-3">ジャンル</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% @genres.each do |genre| %>
+            <li class="list-group-item">
+              <%= link_to genre.name, items_path(genre_id: genre.id) %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
 
     <div class="col-lg-9">
@@ -29,7 +33,7 @@
                   <%= link_to item.name, item_path(item), class: "text-dark" %>
                 </h5>
                 <p class="card-text mt-auto"><%= item.add_tax_price.to_s(:delimited) %>円</p>
-                <a href="<%= item_path(item) %>" class="btn btn-primary btn-sm mt-2">詳細を見る</a>
+                <a href="<%= item_path(item) %>" class="btn btn-primary btn-sm mt-2">商品詳細</a>
               </div>
             </div>
           </div>

@@ -14,7 +14,7 @@
                 <thead>
                   <tr>
                     <th>商品名</th>
-                    <th>単価(税込)</th>
+                    <th>税込価格</th>
                     <th>数量</th>
                     <th>小計</th>
                   </tr>
@@ -97,7 +97,7 @@
               <%= f.hidden_field :address %>
               <%= f.hidden_field :name %>
               <%= f.hidden_field :status %>
-              <%= f.submit "注文を確定する", class: "btn btn-success btn-lg" %>
+              <%= f.submit "注文確定", class: "btn btn-success btn-lg" %>
             <% end %>
           </div>
         </div>
